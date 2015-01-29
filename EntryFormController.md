@@ -17,7 +17,7 @@ New Concepts This Chapter
 ## Mood Dropdown 
 
 Let's start with what we need for our mood picker.  Our end goal is to get our 
-picker to look like this *****add image ******. Our dropdown will be built by 
+picker to look like this *****add image******. Our dropdown will be built by 
 placing the six mood option buttons in front of an image background. As always 
 let's begin by defining our constants and variables. The first one we will define 
 is a constant for our picker dropdown background. 
@@ -34,32 +34,34 @@ wrong, your app will still build and run, but you'll quickly find out your image
 is missing! Watch for those spelling mistakes when referencing image names. 
 
 Now that we have a constant for our background, we need the mood option buttons. 
-Let's begin by defining an array that contains the all of our mood options. 
+Let's begin by defining a collection that contains the all of our mood options. 
 
 ~~~language-swift
- let feelings = [
-    ["title" : "the best", "color" : "#8647b7"],
-    ["title" : "really good", "color": "#4870b7"],
-    ["title" : "okay", "color" : "#45a85a"],
-    ["title" : "meh", "color" : "#a8a23f"],
-    ["title" : "not so great", "color" : "#c6802e"],
-    ["title" : "the worst", "color" : "#b05050"]
-  ]
+let feelings = [
+  ["title" : "the best", "color" : "#8647b7"],
+  ["title" : "really good", "color": "#4870b7"],
+  ["title" : "okay", "color" : "#45a85a"],
+  ["title" : "meh", "color" : "#a8a23f"],
+  ["title" : "not so great", "color" : "#c6802e"],
+  ["title" : "the worst", "color" : "#b05050"]
+]
 ~~~
 
-Our dictionary is actually an array of dictionaries because each member of the
-array has a key-value pair. Each array member has a title which we will use for
-the button label, and as well as a color that corresponds to the feeling. 
+Our collection is an array of dictionaries because each member of the
+array has a key-value pair. Each array item has an index which we will use for
+our button tag, which will represent the value of the option with low numbers 
+representing a better mood and high numbers representing worse moods. 
+We will then use the dictionary at that index to retrieve the button title and 
+color, which we will use to create the button label.
 
 Once we have our constants, it is time to position and style our picker. Type 
 following into the viewDidLoad() method: 
 
 ~~~language-swift
- 	picker.frame = CGRect(x: 45, y: 160, width: 286, height: 291)
-    picker.alpha = 0
-    picker.clipsToBounds = true
-    picker.hidden = true
-    picker.userInteractionEnabled = true
+picker.frame = CGRect(x: 45, y: 160, width: 286, height: 291)
+picker.alpha = 0
+picker.hidden = true
+picker.userInteractionEnabled = true
 ~~~
 
 The first line sets the frame of property of our UIImageView. As we previously 
@@ -71,36 +73,32 @@ width and height denote size. It's worth mentioning now that iOS apps have a
 coordinate system that originates (point 0,0) from the upper left corner of the 
 screen. 
 
-Next we set our opacity by giving the alpha property a value of 0. 1 is fully 
-opaque, while anything between 1 and 0 will show our UIImageView in varying
-degrees of transparency. Setting the property clipsToBounds as true means anything
-inside our UIImageView container that is bigger than the container's size will be
-cut off. This comes into play if your UIImage inside of your UIImageView could
-potentially be larger than the UIImageView's frame. Setting clipsToBounds to false
-would allow for overflow. Next we want to set the picker to hidden, as we only
-want the dropdown visible when the user touches a button to toggle the dropdown. 
+Next we set hide our image view by giving the `alpha` property a value of 0 and 
+setting the `hidden` property to true. With alpha, 1 is synonymous with 100% 
+opaque, while anything between 1 and 0 will show our UIImageView in varying 
+percentages of transparency. You might be wondering why we chose to reduce the 
+alpha property to 0 ***and*** set the hidden property to true, seeing as how both 
+of these properties make the dropdown invisible. The reason is, that an object 
+with an alpha value of 0 is still drawn, and still takes up space in our view. 
+It also means that, despite not being visible, it can still inhibit user 
+interaction with any objects that are stacked behind it. In our case, simply 
+setting the dropdown's alpha to 0 would mean it would block users from interacting 
+with the textfield behind it. This would likely cause your users to get angry that 
+the textfield is "broken." On the other hand, we cannot simply rely on the hidden 
+property because it only has a boolean value to toggle appearance, and we would 
+like to animate and fade in our dropdown. Thus, we will leverage alpha for the 
+fade in affect and animate its value from completely transparent (0) to fully 
+opaque (1).
 
-You might be wondering then, why we chose to reduce the alpha property to 0 and 
-set the hidden property to true, seeing as how both of these properties make the 
-dropdown invisible. The reason is that an object with an alpha value of 0 is still
-drawn, and still takes up space in our view. It also means that, despite not
-being visible, it can still inhibit user interaction with any objects that are
-stacked behind it. In our case, simply setting the dropdown's alpha to 0 would 
-mean it would block users from interacting with the textfield behind it. You'd 
-have your (hopefully) millions of users angry that the textfield is "broken." On 
-the other hand, we can't just rely on the hidden property because we want to 
-fade in our dropdown, which requires setting an alpha value of 0 then animating
-to a fully opaque value of 1. 
-
-Finally our last line sets the userInteractionEnabled property to true, which
+Finally our last line sets the `userInteractionEnabled` property to true, which
 means any touch events on our UIImageView will be registered, rather than 
-ignored. All of the elements in our storyboard have the userInteractionEnabled
+ignored. Most of the elements in our storyboard have the userInteractionEnabled
 property set to true by default. However, when we initialize a new UIImageView
 object, the userInteractionEnabled property is set to false by default. We actually
-could've drawn the picker in our main.storyboard file using interface builder and 
-set our properties attributes inspector. The reason we didn't draw our dropdown
+could have drawn the picker in our Main.storyboard file using interface builder and 
+set our properties attributes inspector. The reason we did not draw our dropdown
 in the interface builder is because we are going to be programatically creating 
-subviews. 
+the button subviews.
 
 Subviews and superviews refer to a parent-child relationship between views. The
 superview is the container for the subview. This means that any coordinates a 
@@ -115,7 +113,7 @@ actually add the picker subview to the view controller's view property.
 Right below our previous code, let's add: 
 
 ~~~language-swift
-    view.addSubview(picker)
+view.addSubview(picker)
 ~~~
 
 This adds a subview, picker, to our view controller's view property. All view
@@ -135,20 +133,20 @@ viewDidLoad method, after your picker.userInteractionEnabled = true statement bu
 before view.addSubview(picker) add the following: 
 
 ~~~language-swift
-    var offset = 21
+var offset = 21
 
-    for (index, feeling) in enumerate(feelings)
-    {
-      let button = UIButton()
-      button.frame = CGRect(x: 13, y: offset, width: 260, height: 43)
-      button.setTitleColor(UIColor(rgba: feeling["color"]!), forState: .Normal)
-      button.setTitle(feeling["title"]!, forState: .Normal)
-      button.addTarget(self, action: "setFeeling:", forControlEvents: .TouchUpInside)
-      
-      picker.addSubview(button)
-      
-      offset += 44
-    }
+for (index, feeling) in enumerate(feelings)
+{
+  let button = UIButton()
+  button.frame = CGRect(x: 13, y: offset, width: 260, height: 43)
+  button.setTitleColor(UIColor(rgba: feeling["color"]!), forState: .Normal)
+  button.setTitle(feeling["title"]!, forState: .Normal)
+  button.addTarget(self, action: "setFeeling:", forControlEvents: .TouchUpInside)
+
+  picker.addSubview(button)
+
+  offset += 44
+}
 ~~~
 
 In order to understand what is going on here, we need to revisit our goals. We 
