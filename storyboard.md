@@ -62,4 +62,33 @@ All of these views, with the exception of the authentication view, are going to
 be tabs in our tab bar. Currently our tab bar only has two views, so let's add 
 three more. 
 
- 
+In our main.storyboard file, you'll want to select the object library in the
+lower right corner of your screen. Drag a view controller from the object library
+and drop it anywhere in your storyboard. This creates a new scene in your 
+storyboard. Like all scenes, our new scene has a view controller and a view. 
+
+*** image with dragging and highlighting object library ****
+
+Ctrl-click on the Tab Controller Scene and drag an outlet onto your new view 
+controller scene. When you drop the outlet on your new controller, a menu will appear
+asking you to establish a relationship between your Tab Bar Scene and your new
+view controller scene. Under "relationship segue", select the "view controller"
+option. Once you do that you'll notice your tab bar controller now has a third tab 
+option. Let's add a label to this new view by dragging a label object from the
+object library and drop it onto our new view controller scene's view. Next, double
+click on the label to change the label text to "Calendar view." After that, double
+click on the tab bar item's name and change the name from item to calendar. 
+Build and run your project to confirm we've added a third view.  
+
+Now we need to add two more views so follow the same procedure as we did for our
+calendar scene to create a trend scene and a settings scene. Now that we've added
+our tab views, let's rename the labels for the tab bar items currently labeled
+first and second to be "entry" and "journal."
+
+*** pic ***
+
+## Adding images to tab bar items 
+
+We are now going to add our custom tab images to our tab bar. 
+
+
