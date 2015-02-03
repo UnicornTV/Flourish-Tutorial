@@ -120,7 +120,7 @@ The images for each tab bar item are as follows:
 * Trends Scene - pulse icon 
 * Settings Scene - settings icon 
 
-### Auto Layout 
+### Adding UI Elements with Auto Layout 
 
 If you build and run our project so far, you'll notice that the two default tabs
 have labels neatly centered in the middle of the screen, while the labels we added
@@ -207,7 +207,7 @@ in the pin menu. Notice all of the constraints have the word "multiple" as a
 placeholder, denoting this applies to more than one object. 
 
 
-![multiple_constraints](![document_outline_check](https://dl.dropboxusercontent.com/u/80807880/tuts_images/doc_outline_check.png))
+![multiple_constraints](https://dl.dropboxusercontent.com/u/80807880/tuts_images/divider_field.png)
 
 Set the constraint for "items of new constraints" and you'll have your divider 
 1px beneath the text field and you have one more general constraint added to 
