@@ -272,7 +272,7 @@ colon. Using our togglePicker function as an example, we read the ternary statem
 as "if picker.hidden is true, call the openPicker method. If false, call the 
 closePicker method." 
 
-## IBActions 
+### IBActions 
 
 You may have noticed that our togglePicker() method has an @IBAction deceleration
 before our familiar func declaration. The @IBAction declaration is known as a 
