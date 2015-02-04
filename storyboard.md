@@ -158,11 +158,11 @@ add the following spacing constraint values in the Pin menu.
 
 ![Entry_general_constraints](https://dl.dropboxusercontent.com/u/80807880/tuts_images/general_constraints.png)
 
-Make sure to select "All frames in container" from the update frames dropdown in
-the Pin menu. This option sets these constraints for all objects in our view, 
-not just our text field. What we've just done is established a relationship our 
+Make sure to select "items of new constraints" from the update frames dropdown in
+the Pin menu. This option sets these constraints only the selected objects in our view, 
+i.e. just our text field. What we've just done is established a relationship our 
 text field object and its nearest neighbor. We've set it so any element will be 
-15 points below any element above it and 17 points to the right of any object to its 
+15 points below any element above it and 40 points to the right of any object to its 
 left. It also is 0 points away from objects to its right, this means that our 
 objects will fill any empty space to their right until it hits another object.  
 
@@ -194,33 +194,64 @@ a divider between our text field and the mood selector.
 
 {x: add_first_divider}
 Drag an view object from the object library into your New Entry view directly 
-beneath your text field give it a height constraint of 1px. In its size 
-inspector, give it a width of 568 points.
+beneath your text field give it a height constraint of 1 point. In its 
+identity inspector, change its label property to "divider",
 
 We now want to establish a relationship between our text field and the divider. 
 What we want to do is set constraint that impacts both of these objects specifically
 and keeps them 1 point apart vertically. 
 
 {x: space_field_divider}
-Select both the text field and the divider and add the a 1px vertical constraint
+Select both the text field and the divider and add the a 1 point vertical constraint
 in the pin menu. Notice all of the constraints have the word "multiple" as a 
 placeholder, denoting this applies to more than one object. 
 
 
-![multiple_constraints](https://dl.dropboxusercontent.com/u/80807880/tuts_images/divider_field.png)
+{x: space_field_divider}
+Add a trailing and leading constraint of 0 between the divider and the containing
+view.
+
+Now finally we want to establish a relationship between the divider and the edge 
+of the containing view object so that the our divider always spans the full width
+of the container. The easiest way to do this is to ctrl-drag from the divider to 
+the containing view and select leading space to margin. Repeat and select trailing
+space to margin.
+
+![divider_superview](https://dl.dropboxusercontent.com/u/80807880/tuts_images/divider_to_view.png)
+
+Now you can edit the value of the leading and trailing space by
+selecting the divider and changing the values in the size inspector. Set both
+trailing and leading space constants to 0. 
+
+![divider_field](https://dl.dropboxusercontent.com/u/80807880/tuts_images/divider_field.png)
+
+{x: space_field_divider}
+Add a vertical constraint between the text field and divider. Select both the 
+text field and the divider and
 
 Set the constraint for "items of new constraints" and you'll have your divider 
-1px beneath the text field and you have one more general constraint added to 
+1 point beneath the text field and you have one more general constraint added to 
 your document outline. This is a good time to note that clicking on a constraint
 reveals which objects are impacted by that constraint in the Size Inspector.
-
 
 Now let's add an icon for this field to let our users know this is a text field. 
 
 {x: add_title_icon}
 Drag an image view object from the object library into your New Entry view so that
-it is directly to the left of our text field and set a width of 13 points and a 
-height of 18 points in the image view's size inspector. 
+it is directly to the left of our text field and vertically aligned. Set a width
+of 13 points and a height of 18 points in the image view's size inspector. 
+
+{x: add_title_icon_constraint}
+Add a 10 point left constraint, a 34 point bottom constraint, and a 25 point top
+to your new image view. Notice we don't add any relationship between the icon 
+and the text field. The reason is that we'd be inviting conflicts by trying to 
+preserve a relationship between the image and the left edge of the view and one 
+between the image and the text field depending on the width of our screen. 
+Remember we want to use auto layout to create a universal layout for all iOS 
+devices. 
+
+
+
 
 
 
