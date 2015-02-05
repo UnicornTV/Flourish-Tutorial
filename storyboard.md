@@ -48,20 +48,35 @@ the tab bar that we can use navigate between them. Now that you're comfortable
 with what xcode gives us as a default, let's go back to xcode and start adding 
 views. 
 
-### Adding views to our default project 
+### Nesting View Controllers
 
-Our app is going to consist of 5 views: 
-* Authentication
-* My Entries
-* New Entry 
-* Calendar
-* Trends
-* Settings
+It is good practice in iOS to encapsulate functionality in its own view controller 
+to keep our controller code short and focused. With that in mind, we want to 
+introduce the concept of a "container" view controller. A container view controller
+is no different from any other view controller (called a "content" view controller)
+except that the container view controller's sole purpose is to present other view
+controllers. 
 
-All of these views, with the exception of the authentication view, are going to 
-be tabs in our tab bar. Currently our tab bar only has two views, so let's add 
-three more. 
+{x: container_view_controller} 
+Read the ["Designing Your Container View Controller"](https://developer.apple.com/library/ios/featuredarticles/ViewControllerPGforiPhoneOS/CreatingCustomContainerViewControllers/CreatingCustomContainerViewControllers.html) section in the developer docs.
 
+Placing a view controller inside another is called nesting and our current app
+design could benefit from nesting. The way we are going to approach this is to
+treat all of our existing controllers as container controllers and we are then
+going to create content controllers within each. It is important to note at this
+point that you can always nest a controller within a controller as there are few
+hard and fast rules. However, there are some controllers that are almost always
+container controllers and should <strong> always </strong> have a nested content
+controller if you'd like to display content within that controller. One such 
+controller is a navigation controller, whose purpose is to manage navigation
+of hierarchical content. We are actually going to use a navigation controller
+as our container view because some of our tabs are going to have view we navigate
+to from the initial view. This is called a "stack" of views. Our navigation 
+controller is going to manage our view stack. 
+
+ Let's do an example: 
+
+{x: journal_navigation_controller} 
 In our main.storyboard file, you'll want to select the object library in the
 lower right corner of your screen. Drag a view controller from the object library
 and drop it anywhere in your storyboard. This creates a new scene in your 
@@ -79,6 +94,23 @@ object library and drop it onto our new view controller scene's view. Next, doub
 click on the label to change the label text to "Calendar view." After that, double
 click on the tab bar item's name and change the name from item to calendar. 
 Build and run your project to confirm we've added a third view.  
+
+
+
+### Adding views to our default project 
+
+Our app is going to consist of 5 views: 
+* Authentication
+* My Entries
+* New Entry 
+* Calendar
+* Trends
+* Settings
+
+All of these views, with the exception of the authentication view, are going to 
+be tabs in our tab bar. Currently our tab bar only has two views, so let's add 
+three more. 
+
 
 Now we need to add two more views so follow the same procedure as we did for our
 calendar scene to create a trend scene and a settings scene. Now that we've added
@@ -120,6 +152,7 @@ The images for each tab bar item are as follows:
 * Trends Scene - pulse icon 
 * Settings Scene - settings icon 
 
+
 ### Adding UI Elements with Auto Layout 
 
 If you build and run our project so far, you'll notice that the two default tabs
@@ -139,7 +172,6 @@ Before moving on, familiarize yourself with the ["Auto Layout menus in Xcode"](h
 Now let's go through a concrete example of auto layout by creating our new entry
 form UI. Here's a wire frame for this view:
 
-
 As you can see we have a text field for entering a title for your entry, a
 select button to select a mood from a set of options, a text field for the body
 of your journal entry, and a save button to save your journal entry. Let's select
@@ -152,106 +184,156 @@ First delete the label that is currently in the New Entry view.
 Select your Entry view and change the background color to a dark blue in the attributes inspector.
 If you're wondering, we used RGB(21, 69, 110) for the production app. 
 
-{x: entry_global_constraints}
+{x: entry_height_constraint}
 Drag a text field object from the object library into your New Entry view and 
-add the following spacing constraint values in the Pin menu.
+add a 40 point height constraint in the Pin menu.
+
+{x: set_date_text}
+Change the text property of our text field to "Date" in the attributes inspector.
+
 
 ![Entry_general_constraints](https://dl.dropboxusercontent.com/u/80807880/tuts_images/general_constraints.png)
 
+{x: entry_height_constraint}
+Drag a text field object from the object library into your New Entry view and 
+add a 40 point height constraint in the Pin menu.
+
 Make sure to select "items of new constraints" from the update frames dropdown in
 the Pin menu. This option sets these constraints only the selected objects in our view, 
-i.e. just our text field. What we've just done is established a relationship our 
-text field object and its nearest neighbor. We've set it so any element will be 
-15 points below any element above it and 40 points to the right of any object to its 
-left. It also is 0 points away from objects to its right, this means that our 
-objects will fill any empty space to their right until it hits another object.  
+i.e. just our text field. 
 
-Furthermore, we specify some constraints that just apply to our text field. 
+Now we want to set a width for our date field. We can set a width constraint, but
+that isn't a good idea. The goal of Auto Layout is to make our interface flexible
+for different screen sizes, so some of our elements need to resize on some devices.
+As a rule of thumb for resizeable elements <strong> only set height constraints 
+in points, and set relative width with leading and trailing margin.</strong> We 
+want our interface to work on iPhone 5, 6, 6 plus, and even some iPads. Those
+devices vary wildly in width. Also, we want to have a good landscape mode as well
+for all of those devices. Setting a relative width helps us avoid issues on 
+different screens. 
 
-{x: entry_global_constraints}
-Drag a text field object from the object library into your New Entry view and 
-add the 40 point height constraint values in the Pin menu
+{x: text_field_container_constant}
+Ctrl-drag from the date field to the containing view and select leading space to 
+margin. In the date field's size inspector, edit the leading space to superview
+constraint to equal 40. 
 
-![Entry_general_constraints](https://dl.dropboxusercontent.com/u/80807880/tuts_images/text_field_constraints.png)
-
-Make sure you select "items of new constraints" from the
-update frames dropdown in the Pin menu to make our change only apply to the
-selected object, in this case our text field. You can check if you've done the
-last two steps right but looking at your document outline of your storyboard file. 
-You should have three general constraints and one constraint for your Round
-Style Text Field. 
-
-{x: doc_outline_check}
-Compare your document outline to the following image:
-
-![document_outline_check](https://dl.dropboxusercontent.com/u/80807880/tuts_images/doc_outline_check.png)
-
-{x: change_label_text }
-In the text field's attributes inspector, change the text property to "Date".
-
-We are now going to build the mood selector field. This involves first creating
-a divider between our text field and the mood selector. 
-
-{x: add_first_divider}
-Drag an view object from the object library into your New Entry view directly 
-beneath your text field give it a height constraint of 1 point. In its 
-identity inspector, change its label property to "divider",
-
-We now want to establish a relationship between our text field and the divider. 
-What we want to do is set constraint that impacts both of these objects specifically
-and keeps them 1 point apart vertically. 
-
-{x: space_field_divider}
-Select both the text field and the divider and add the a 1 point vertical constraint
-in the pin menu. Notice all of the constraints have the word "multiple" as a 
-placeholder, denoting this applies to more than one object. 
+![Ctrl_drag](https://dl.dropboxusercontent.com/u/80807880/tuts_images/text_field_ctrl_drag.png)
 
 
-{x: space_field_divider}
-Add a trailing and leading constraint of 0 between the divider and the containing
-view.
+{x: text_field_container_constant}
+Ctrl-drag from the divider to the containing view and this time select trailing 
+space to margin. In the date field's size inspector, edit the trailing space to 
+superview constraint to equal 0. 
 
-Now finally we want to establish a relationship between the divider and the edge 
-of the containing view object so that the our divider always spans the full width
-of the container. The easiest way to do this is to ctrl-drag from the divider to 
-the containing view and select leading space to margin. Repeat and select trailing
-space to margin.
+The previous two steps have set our date field to have a 40 point left margin and
+to fill the rest of the horizontal space in the container. 
 
-![divider_superview](https://dl.dropboxusercontent.com/u/80807880/tuts_images/divider_to_view.png)
+{x: text_field_container_constant}
+Ctrl-drag from the divider to the containing view and this time select top space 
+to layout guide. In the date field's size inspector, edit the top space to 
+top layout guide to 15 points. 
 
-Now you can edit the value of the leading and trailing space by
-selecting the divider and changing the values in the size inspector. Set both
-trailing and leading space constants to 0. 
+Here's what your date field's constraints should look like in the size inspector:
 
-![divider_field](https://dl.dropboxusercontent.com/u/80807880/tuts_images/divider_field.png)
+![date_constraints](https://dl.dropboxusercontent.com/u/80807880/tuts_images/date_field_constraints.png)
 
-{x: space_field_divider}
-Add a vertical constraint between the text field and divider. Select both the 
-text field and the divider and
+Build and run at this point using various hardware emulators to verify our 
+constraints are working properly. 
 
-Set the constraint for "items of new constraints" and you'll have your divider 
-1 point beneath the text field and you have one more general constraint added to 
-your document outline. This is a good time to note that clicking on a constraint
-reveals which objects are impacted by that constraint in the Size Inspector.
+Now we want to add an icon for this text field. In order to that, we need to 
+add an image view object to our view. 
 
-Now let's add an icon for this field to let our users know this is a text field. 
+{x: add_icon}
+Drag an image view from the object library and drop it onto our view. Set a
+height constraint of 13 points and a width constraint of 18 points. 
 
-{x: add_title_icon}
-Drag an image view object from the object library into your New Entry view so that
-it is directly to the left of our text field and vertically aligned. Set a width
-of 13 points and a height of 18 points in the image view's size inspector. 
+{x: add_background_image}
+Change image property of our new image view to the pencil icon, which can be 
+downloaded and added to your project [here](https://dl.dropboxusercontent.com/u/80807880/UI.zip). Feel free to also use your own
+icons if you want. 
 
-{x: add_title_icon_constraint}
-Add a 10 point left constraint, a 34 point bottom constraint, and a 25 point top
-to your new image view. Notice we don't add any relationship between the icon 
-and the text field. The reason is that we'd be inviting conflicts by trying to 
-preserve a relationship between the image and the left edge of the view and one 
-between the image and the text field depending on the width of our screen. 
-Remember we want to use auto layout to create a universal layout for all iOS 
-devices. 
+We now want to horizontally align the center of our image with the center of our
+text field. This is going to require some math. We have a 40 points tall date 
+field with a 15 point top margin. Our icon, however is only 18 points tall and 
+needs a top margin that will ensure it is always aligned with the divider. What 
+we can do is simply take half of the difference in heights between the date field and the
+icon and add that to the date field's top margin. Our date field is 22 pixels 
+taller with a 15 point top margin. That means we need a 26 point top margin on 
+our icon (0.5 * 22 + 15).
+
+{x: add_icon_top}
+Set a 37 point top margin to the icon by ctrl-dragging from the icon to the 
+container view and selecting "top space to layout guide."
+
+{x: add_icon_left}
+Add a 10 point left margin using the same ctrl-drag technique we've been using. 
+
+Here's what our view should look like now. 
+
+![ui_field_icon](https://dl.dropboxusercontent.com/u/80807880/tuts_images/ui_icon_field.png)
+
+Now we need to add a divider that is going to separate our date field from the 
+other input objects in that app. 
+
+{x: add_divider}
+Drag an view from the object library and drop it onto our view. Set a
+height constraint of 1 point. 
+
+{x: rename_divider}
+Change the view's label property in the document section of the identity inspector
+to "Divider."
+
+{x: divider_left_right}
+Set a leading and trailing margin constraint of 0 between our Divider and its
+containing view. 
+
+So far we've estbalished a relative width of our divider with leading and 
+trailing constraints. Now we need to give our divider a vertical position. 
+Heretofore we've set a top margin between our elements and the top layout guide. 
+For the divider, however, we are going to set a margin relative to the date
+field, not the top layout guide. 
+
+{x: divider_top}
+Set a top for the divider relative to the date view. In the document outline, 
+Ctrl-drag from the divider to the date field and select "vertical spacing" option.
+In the divider's size inspector, change the top space to: Date constant to 
+1 point. 
+
+Here's what the divider's size inspector should now look like:
+
+![divider_constraints](https://dl.dropboxusercontent.com/u/80807880/tuts_images/divider_constraints.png)
 
 
+{x: date_field_background}
+To match our mockup, we now want to change our date field's border style to 
+transparent and our font color to white in the date field's attribute inspector.
 
+Here's what our UI looks like at this point: 
+
+![ui_text_divider_icon](https://dl.dropboxusercontent.com/u/80807880/tuts_images/ui_icon_field_divider.png)
+
+### Finishing the UI 
+
+We've gone over setting Auto Layout constraints between an object and its container
+as well as between an object and another object. At this point, we aren't going 
+to rehash these techniques for each part of the UI. You are armed with enough
+knowledge to build it out yourself. Take a look at the following image for all
+of the objects in our view to know which objects to grab from the object library. 
+From there you can position them in the view. 
+
+{x: auto_layout_issues}
+Since you'll probably make a few mistakes on your own, read about [resolving Auto Layout Issues](https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/ResolvingIssues/ResolvingIssues.html#//apple_ref/doc/uid/TP40010853-CH17-SW1) 
+
+{x: build_out_entry}
+Build out the rest of the New Entry scene interface using our Auto Layout techniques. It's ok
+to not have the exact same values as found in the source code. Just watch out
+for constraint conflicts! 
+
+*** add guide ***
+
+![ui_guide](https://dl.dropboxusercontent.com/u/80807880/tuts_images/ui_guide.png)
+
+### Tackling other views
 
 
 
