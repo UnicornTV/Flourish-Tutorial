@@ -11,6 +11,15 @@ when we create controllers for each view. In Xcode, the easiest way to create
 our UI is using storyboards. Storyboards are a visual tool for laying out 
 application elements using a drag and drop interface and a series of menus. 
 
+New Concepts This Chapter 
+* Scenes
+* View Controllers
+* View Stacks
+* Controller Nesting
+* Auto Layout
+
+
+{x: explore main.storyboard}
 Jump to your main.storyboard file to get acquainted. When we created our project, 
 we said we were making a tabbed application, which means xcode has already given 
 us a few things in our storyboard. First, notice we have several labeled boxes
@@ -35,16 +44,20 @@ and if we are not extending that functionality, we often don't need to create a
 .swift file for that controller. 
 
 
+{x: first_build}
 Hit the play button in the upper left hand corner your xcode window to build and 
 run the project. This will compile our code into an app and install that app onto
 the device specified in the build scheme. You can edit the target device by 
 selecting the dropdown menu in the active scheme editor. 
 
-*** show image ***
+![play_button](https://dl.dropboxusercontent.com/u/80807880/tuts_images/play_button.png)
 
+{x: set_target}
 Let's select iPhone 6 as our target device and run our app. This will launch our 
 iOS simulator in a separate window and run our app. You'll see  our scenes and 
-the tab bar that we can use navigate between them. Now that you're comfortable 
+the tab bar that we can use navigate between them. 
+
+Now that you're comfortable 
 with what xcode gives us as a default, let's go back to xcode and start adding 
 views. 
 
@@ -61,41 +74,75 @@ controllers.
 Read the ["Designing Your Container View Controller"](https://developer.apple.com/library/ios/featuredarticles/ViewControllerPGforiPhoneOS/CreatingCustomContainerViewControllers/CreatingCustomContainerViewControllers.html) section in the developer docs.
 
 Placing a view controller inside another is called nesting and our current app
-design could benefit from nesting. The way we are going to approach this is to
-treat all of our existing controllers as container controllers and we are then
+design could benefit from it. The way we are going to approach this is to
+create container controllers for each of our tab views and we are then
 going to create content controllers within each. It is important to note at this
-point that you can always nest a controller within a controller as there are few
-hard and fast rules. However, there are some controllers that are almost always
-container controllers and should <strong> always </strong> have a nested content
-controller if you'd like to display content within that controller. One such 
-controller is a navigation controller, whose purpose is to manage navigation
-of hierarchical content. We are actually going to use a navigation controller
-as our container view because some of our tabs are going to have view we navigate
-to from the initial view. This is called a "stack" of views. Our navigation 
-controller is going to manage our view stack. 
+point that you can always nest a controller within a controller and there are few
+hard and fast rules about when to nest. However, there are some controllers that 
+are almost always container controllers and should <strong> always </strong> 
+have a nested content controller if you'd like to display content within that 
+controller. One such controller is a navigation controller, whose purpose is to 
+manage navigation of hierarchical content. We are actually going to use a 
+navigation controller as our container view because some of our tabs are going 
+to have views we navigate to from the initial view. Navigating "down" from an 
+initial view to other views and hitting  a back button to get to the previous view
+is called view stacking and we can visualize a physical stack of views. 
 
- Let's do an example: 
+![view_controller_stack](https://developer.apple.com/library/ios/featuredarticles/ViewControllerPGforiPhoneOS/Art/navigation_interface_2x.png)
+
+<i> this image shows a stack of views. Notice the back buttons to return
+to the previous view in the stack</i>
+
+Our navigation controller is going to manage our view stack. 
+
+Let's do an example: 
 
 {x: journal_navigation_controller} 
 In our main.storyboard file, you'll want to select the object library in the
-lower right corner of your screen. Drag a view controller from the object library
-and drop it anywhere in your storyboard. This creates a new scene in your 
+lower right corner of your screen. Drag a navigation controller from the object 
+library and drop it anywhere in your storyboard. This creates a new scene in your 
 storyboard. Like all scenes, our new scene has a view controller and a view. 
+
+The navigation controller object you've just added to your storyboard actually
+contains two controllers: the container controller and the first content controller
+in the stack. The first content controller in a stack is called the "root" view
+controller. 
 
 *** image with dragging and highlighting object library ****
 
-Ctrl-click on the Tab Controller Scene and drag an outlet onto your new view 
+{x: tab_controller_relationship} 
+Ctrl-click on the Tab Controller Scene and drag an outlet onto your new navigation
 controller scene. When you drop the outlet on your new controller, a menu will appear
 asking you to establish a relationship between your Tab Bar Scene and your new
 view controller scene. Under "relationship segue", select the "view controller"
 option. Once you do that you'll notice your tab bar controller now has a third tab 
-option. Let's add a label to this new view by dragging a label object from the
-object library and drop it onto our new view controller scene's view. Next, double
-click on the label to change the label text to "Calendar view." After that, double
-click on the tab bar item's name and change the name from item to calendar. 
-Build and run your project to confirm we've added a third view.  
+option.
 
+![adding_segue_navigation](https://dl.dropboxusercontent.com/u/80807880/tuts_images/adding_segue_navigation.png) 
 
+![adding_tab_item](https://dl.dropboxusercontent.com/u/80807880/tuts_images/adding_tab_item.png)
+
+{x: removing_default_table_view} 
+Sadly our default root view controller in storyboard is a TableViewController, 
+which isn't what we need. Click on the root view controller scene and delete it 
+entirely. 
+
+{x: add_view_to_nav} 
+Drag a plain ol' view object from the object library and drop it onto the 
+storyboard and ctrl-drag an outlet from the navigation controller scene to the 
+new view scene. When you drop the outlet, select "root view controller" from the 
+Relationship Segue menu. 
+
+![view_nav_outlet](https://dl.dropboxusercontent.com/u/80807880/tuts_images/view_nav_outlet.png)
+
+![view_nav_connection](https://dl.dropboxusercontent.com/u/80807880/tuts_images/view_to_nav.png)
+
+{x: adding_label} 
+Let's add a label to this new view by dragging a label object from the
+object library and drop it onto our new navigation controller scene's root view.
+Next, double click on the label to change the label text to "Calendar view." 
+After that, double click on the tab bar item's name and change the name from item 
+to calendar. Build and run your project to confirm we've added a third view.  
 
 ### Adding views to our default project 
 
@@ -108,16 +155,17 @@ Our app is going to consist of 5 views:
 * Settings
 
 All of these views, with the exception of the authentication view, are going to 
-be tabs in our tab bar. Currently our tab bar only has two views, so let's add 
+be tabs in our tab bar. Currently our tab bar only has three views, so let's add 
 three more. 
 
-
+{x: adding_calendar_trend} 
 Now we need to add two more views so follow the same procedure as we did for our
-calendar scene to create a trend scene and a settings scene. Now that we've added
-our tab views, let's rename the labels for the tab bar items currently labeled
-first and second to be "entry" and "journal."
+calendar scene to create a trend scene and a settings scene. 
 
-*** pic ***
+{x: renaming_existing_views} 
+We need to delete the existing views currently labeled "first" and "second" and
+create two new navigation controller/root controller pairs for the "entry" and 
+"journal" views to round out our tabs. 
 
 ### Adding images to tab bar items 
 
@@ -130,7 +178,7 @@ so you can go ahead and download our
 file and you'll have an icons folder. Drag the icons folder into your xcode 
 project's images.xcassets. You'll now see your icons in the images.xcassets folder. 
 
-*** add image ***
+![tab_icons_added](https://dl.dropboxusercontent.com/u/80807880/tuts_images/adding_tab_assets.png)
 
 If you are adding your own icons, please follow the [Icon and Image Sizes 
 guidelines](https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/MobileHIG/IconMatrix.html) 
@@ -177,8 +225,6 @@ select button to select a mood from a set of options, a text field for the body
 of your journal entry, and a save button to save your journal entry. Let's select
 our new entry scene and begin building our interface. 
 
-{x: clean_slate}
-First delete the label that is currently in the New Entry view.
 
 {x: background_color}
 Select your Entry view and change the background color to a dark blue in the attributes inspector.
@@ -303,7 +349,6 @@ Here's what the divider's size inspector should now look like:
 
 ![divider_constraints](https://dl.dropboxusercontent.com/u/80807880/tuts_images/divider_constraints.png)
 
-
 {x: date_field_background}
 To match our mockup, we now want to change our date field's border style to 
 transparent and our font color to white in the date field's attribute inspector.
@@ -329,12 +374,21 @@ Build out the rest of the New Entry scene interface using our Auto Layout techni
 to not have the exact same values as found in the source code. Just watch out
 for constraint conflicts! 
 
-*** add guide ***
-
 ![ui_guide](https://dl.dropboxusercontent.com/u/80807880/tuts_images/ui_guide.png)
 
 ### Tackling other views
 
+Now that you understand how to use Auto Layout to position elements in your view,
+you can build out the rest of the static UI. Below you will see guides for each
+of the remaining views. Follow the guides for object types and colors and use 
+your own constraints for positioning. 
 
+{x: build_out_journal}
+
+{x: build_out_settings}
+
+{x: build_out_trends}
+
+{x: build_out_calendar}
 
 
