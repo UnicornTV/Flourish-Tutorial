@@ -357,7 +357,7 @@ Here's what our UI looks like at this point:
 
 ![ui_text_divider_icon](https://dl.dropboxusercontent.com/u/80807880/tuts_images/ui_icon_field_divider.png)
 
-### Finishing the UI 
+### Finishing the Entry Form UI 
 
 We've gone over setting Auto Layout constraints between an object and its container
 as well as between an object and another object. At this point, we aren't going 
@@ -370,25 +370,19 @@ From there you can position them in the view.
 Since you'll probably make a few mistakes on your own, read about [resolving Auto Layout Issues](https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/ResolvingIssues/ResolvingIssues.html#//apple_ref/doc/uid/TP40010853-CH17-SW1) 
 
 {x: build_out_entry}
-Build out the rest of the New Entry scene interface using our Auto Layout techniques. It's ok
-to not have the exact same values as found in the source code. Just watch out
-for constraint conflicts! 
+Build out the rest of the New Entry scene interface using our Auto Layout 
+techniques. It's ok to not have the exact same values as found in the source 
+code. Just watch out for constraint conflicts! 
 
 ![ui_guide](https://dl.dropboxusercontent.com/u/80807880/tuts_images/ui_guide.png)
 
 ### Tackling other views
 
 Now that you understand how to use Auto Layout to position elements in your view,
-you can build out the rest of the static UI. Below you will see guides for each
-of the remaining views. Follow the guides for object types and colors and use 
-your own constraints for positioning. 
-
-{x: build_out_journal}
-
-{x: build_out_settings}
-
-{x: build_out_trends}
-
-{x: build_out_calendar}
+you can build out the rest of the static UI. Some of the remaining views will 
+make heavy use of interface builder and you'll get to practice your auto layout
+skills. Other views, however, will mostly be constructed programmatically in 
+our view controller code. Each of the remaining UI construction will be detailed
+in the chapters for the individual views. 
 
 

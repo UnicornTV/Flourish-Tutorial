@@ -9,18 +9,84 @@ also introduce IBAction methods and IBOutlet objects that we will use to link
 elements of our Storyboard to the code in our view controller. 
 
 New Concepts This Chapter 
+* Ternary Operator
 * IBAction
 * IBOutlet 
 
 ### Creating EntryFormController.swift
 
+We've already created a view controller using storyboards in our interface 
+chapter. What we want to do now is continue to work on that view controller
+in code. To do that we need to create a .swift file that we then link to our
+existing view controller in our storyboard. Here's how:
+
+{x: new_swift_file}
+Add a new swift file to your project. Go to file > new > file and select 
+"swift file." Name the file EntryFormController.swift
+
+{x: new_class_declaration}
+Erase any code in the EntryFormController.swift file and replace it with the
+following:
+
+~~~language-swift
+import UIKit
+import CoreLocation
+
+class EntryFormController: UIViewController, UITextFieldDelegate, UITextViewDelegate
+{
+    
+}
+~~~
+
+The first two lines import UIKit and CoreLocation libraries. The next line
+is where declare a new class called EntryFormController that is an instance of
+the UIViewController class. Next we have our class conform to the UITextFieldDelegate
+and UITextFeldDelegate protocols. The protocols are going to allow us to access
+the values typed into the our text field and text view objects. 
+
+{x: link_to_interface}
+Now that we've declared our class we want to link our new class to the our 
+entry view controller in our storyboard file. Go to main.storyboard and click
+on the view in your entry scene. Now go to that view's identity inspector and
+in the Custom Class section's class field, type EntryFormController.
+
+That's it! We've now got our EntryFormController.swift file and our view controller
+in interface builder linked up. Now we need to declare some basic methods in our
+class. 
+
+
+{x: controller_setup_methods}
+Add the following to your EntryFormController.swift file.
+
+~~~language-swift
+ override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+~~~
+
+
 ### Mood Dropdown 
 
-Let's start with what we need for our mood picker.  Our end goal is to get our 
-picker to look like this *****add image******. Our dropdown will be built by 
+Let's start with what we need for our mood picker. Our end goal is to get our 
+picker to look like this
+
+![picker_image](https://dl.dropboxusercontent.com/u/80807880/tuts_images/picker_example.png) 
+
+Our dropdown will be built by 
 placing the six mood option buttons in front of an image background. As always 
 let's begin by defining our constants and variables. The first one we will define 
 is a constant for our picker dropdown background. 
+
+
+{x: create_picker_constant}
+Add the following code to the top of your EntryFormController.swift file at the
+top right after the class is declared. 
 
 ~~~language-swift
 let picker = UIImageView(image: UIImage(named: "picker"))
@@ -34,7 +100,9 @@ wrong, your app will still build and run, but you'll quickly find out your image
 is missing! Watch for those spelling mistakes when referencing image names. 
 
 Now that we have a constant for our background, we need the mood option buttons. 
-Let's begin by defining a collection that contains the all of our mood options. 
+
+{x: defining_mood_collection}
+Begin by defining a collection that contains the all of our mood options. 
 
 ~~~language-swift
 let feelings = [
@@ -54,8 +122,10 @@ representing a better mood and high numbers representing worse moods.
 We will then use the dictionary at that index to retrieve the button title and 
 color, which we will use to create the button label.
 
-Once we have our constants, it is time to position and style our picker. Type 
-following into the viewDidLoad() method: 
+Once we have our constants, it is time to position and style our picker. 
+
+{x: picker_properties}
+Type following into the viewDidLoad() method: 
 
 ~~~language-swift
 picker.frame = CGRect(x: 45, y: 160, width: 286, height: 291)
@@ -77,7 +147,7 @@ Next we set hide our image view by giving the `alpha` property a value of 0 and
 setting the `hidden` property to true. With alpha, 1 is synonymous with 100% 
 opaque, while anything between 1 and 0 will show our UIImageView in varying 
 percentages of transparency. You might be wondering why we chose to reduce the 
-alpha property to 0 ***and*** set the hidden property to true, seeing as how both 
+alpha property to 0 <i>and</i> set the hidden property to true, seeing as how both 
 of these properties make the dropdown invisible. The reason is, that an object 
 with an alpha value of 0 is still drawn, and still takes up space in our view. 
 It also means that, despite not being visible, it can still inhibit user 
@@ -110,7 +180,9 @@ a subview of the view controller's view property and the mood buttons are going
 to be subviews of the picker. To see how this plays out, we first need to 
 actually add the picker subview to the view controller's view property. 
 
-Right below our previous code, let's add: 
+{x: add_picker_subview}
+Right below our previous code, add the picker subview to the view controller's 
+view property by adding: 
 
 ~~~language-swift
 view.addSubview(picker)
@@ -124,13 +196,17 @@ Now that we have created a new subview, let's make sure nothing has gone awry.
 Go back and change the picker's hidden property to true and alpha to 1 and build
 and run to make sure our subview is showing up. You should see this:
 
-**** add image ****
+![dropdown_no_button_example](https://dl.dropboxusercontent.com/u/80807880/tuts_images/dropdown_no_button.png)
 
+{x: reset_alpha}
 Ok we have our picker. Reset alpha to 0 and the hidden to true and let's move on. 
+
 Now that we have the picker, we need to mood buttons that go inside the picker. 
-For that we are going to add a subview to picker for each mood option. In the
-viewDidLoad method, after your picker.userInteractionEnabled = true statement but
-before view.addSubview(picker) add the following: 
+For that we are going to add a subview to picker for each mood option. 
+
+{x: add_button_loop}
+In the viewDidLoad method, after your picker.userInteractionEnabled = true 
+statement but before view.addSubview(picker) add the following: 
 
 ~~~language-swift
 var offset = 21
@@ -180,7 +256,10 @@ loop adds our button as a subview on the picker view. Finally, we increment our
 offset variable before our next iteration of the loop. 
 
 Before we can build and run to see our beautiful dropdown menu, we need methods 
-that will show and hide our dropdown. Here's is our open picker method: 
+that will show and hide our dropdown. 
+
+{x: open_picker}
+Create an openPicker() method with the following code:  
 
 ~~~language-swift
 func openPicker()
@@ -227,6 +306,8 @@ of animateWithDuration simply denotes a block of code to run after the animation
 has completed. In this case we aren't doing anything after the animation so we 
 leave the default "finished in" line. 
 
+
+{x: close_picker_method}
 Now that we have an open picker method, we need a method with the converse of all
 of our openPicker commands to have the picker fade out and slide up. Here's the
 closePicker() method: 
@@ -253,7 +334,9 @@ Ok let's take stock: we have created a picker object and given it buttons as
 subviews. We've added the picker (and by extension it's subviews) to our view 
 and we wrote methods for opening and closing our picker. Now we need to call
 the open and close methods to show and hide our picker when our app is running. 
-To do this we will write a method that calls closePicker() if the picker is open
+
+{x: toggle_picker}
+To toggle our picker, write a method that calls closePicker() if the picker is open
 and openPicker() if the picker is closed. Then we'll have a button in our interface
 call that method when a user taps the button. Meet our togglePicker method: 
 
@@ -285,7 +368,9 @@ Read our function declaration line as "Our function is an IBAction and it is
 called togglePicker and it returns the sender object that called the function."
 
 Now we just have one more step before we take a break to build our project. We
-need to connect our select button in our storyboard to the togglePicker method. 
+need to connect our select button in our storyboard to the togglePicker method.
+
+{x: connect_toggle_to_storyboard} 
 To connect an object to an IBAction, the easiest way is to open up our main.storyboard
 file next to our EntryViewController.swift file and dragging an outlet from 
 the object to the IBAction. To get a side-by-side of two files, simply click on
@@ -295,13 +380,20 @@ click on the touchUpInside event and drag an outlet to the togglePicker method.
 We've now set the togglePicker method to be called whenever our select button's
 touchUpInside event fires, i.e. when a user taps the button. 
 
+{x: build_check_toggle} 
 Now finally, build and run. Tapping on the select button will reveal toggle our
-picker with the mood buttons we created! Now we need to write some more code to 
-allow us to set a mood when we tap a mood button. To reflect a set mood, we are
-going to change the label of our select button in our interface builder to show
-the mood we've chosen in our picker. 
+picker with the mood buttons we created! 
+
+
+Now we need to write some more code to  allow us to set a mood when we tap a 
+mood button. 
 
 ###IBOutlet 
+
+{x: declare_feelingButton_IBoulet}
+To reflect a set mood, we are going to change the label of our select button in 
+our interface builder to show the mood we've chosen in our picker. Write the 
+following below your other variable and constant declarations: 
 
 ~~~language-swift
   @IBOutlet weak var feelingButton: UIButton!
@@ -320,6 +412,7 @@ This means from now on we can simply reference the variable name feelingButton
 and its value will be unwrapped each time we use it. Otherwise we'd have to 
 explicitly unwrap the optional's value each time we use it in our code. 
 
+{x: connect_feeling_to_storyboard} 
 Now that we've declared our IBOutlet variable, we need to link it to our interface
 builder object to our IBOulet variable. This works very similar to linking IBActions. 
 With both our main.storyboard file and our EntryFormController.swift files open, 
@@ -348,6 +441,7 @@ our closePicker() method, which hides our picker. Notice that we have already
 linked this IBAction to the touchUpInside event of our mood buttons ***link back
 to that line ***
 
+{x: build_run_setting_mood} 
 Ok now build and run, you'll notice that when you pick a mood from the picker 
 dropdown, our feelingButton's label changes from "select" to the title of the 
 mood you've selected!
