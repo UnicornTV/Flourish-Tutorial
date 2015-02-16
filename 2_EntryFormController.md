@@ -449,6 +449,176 @@ mood you've selected!
 ### Saving Our Entry
 
 
-### Location
+### Getting location data 
+
+We want to be able to allow the user to enter location data for their entry. This
+can help our user determine if certain places are more helpful or hurtful to mental
+health. In this section, we are going to get permission from the user to use
+location services so we can store the user's location along with the other 
+journal entry data. 
+
+In iOS, the CLLocationManager class oversees every aspect of location services. 
+This is going to be the primary class we use to get our user's location to add
+to our journal entry. Let's put this class to work:
+
+{x: instantiate_locationManager}
+In ViewController.swift, declare variables for location manager and current 
+location. We aren't going to assign our variables to anything yet, but we are
+going to specify that locationManager be of type CLLocationManager and 
+currentLocation is of type CLLocation. 
+
+~~~language-swift
+  var locationManager: CLLocationManager!
+  var currentLocation: CLLocation?
+~~~ 
+
+Notice the CLLocationManager type is an implicitly unwrapped optional because
+we are going to assign it to an instance of the CLLocationManager class, therefore
+it will always have a value. Our currentLocation variable is an optional because
+we are only going to have a value if the user grants our app permission to 
+record location data. 
+
+{x: setuplocation_method}
+Now create a new method called setupLocationManager() to initialize our location
+services with the following code:
+
+~~~language-swift
+func setupLocationManager()
+  {
+    locationManager = CLLocationManager()
+    locationManager.delegate = self
+    locationManager.requestWhenInUseAuthorization()
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    locationManager.distanceFilter = kCLLocationAccuracyNearestTenMeters
+    locationManager.startUpdatingLocation()
+  }
+~~~
+
+The first line of setupLocationManager() assigns our locationManger variable to
+an instance of the CLLocationManger class. The second line assigns the 
+locationManager delegate to our view controller. The delegate is going to recieve
+all of the location-related information. The third line is the requestWhenInUseAuthorization
+method, which will prompt the user to allow our app to use location services. Next
+we set some preferences for our location data. The desiredAccuracy property allows
+us to tell our receiver when to give us updated location data. For example, if we
+needed to get kilometer-level data, we could set the desiredAccuracy property to 
+kCLLocationAccuracyKilometer. This would say "don't talk to me until you have
+kilometer-level location data because that's the level I need." It's great to 
+be able to set a standard of accuracy, but we aren't relying on location data for 
+anything fancy like walking directions. We want to get our location data as 
+quickly as possible so we're simply going to set our desiredAccuracy to the
+default value: kCLLocationAccuracyBest. Next we set the distanceFilter property 
+of the CLLocationManager class, which sets the minimum distance  a device must
+move horizontally before an update even is generated. We're going to request an 
+update at every 10 meters of horizontal distance, so we set our property to 
+kCLLocationAccuracyNearestTenMeters. It's important to note there isn't an exact
+science for choosing your desiredAccuracy and distanceFilter properties. Just
+know that the more accurate you want your location data, the more hardware 
+resources you're consuming. Finally we call the startUpdatingLocation method 
+which returns immediately an initial location to our locationManager delegate. 
+
+
+Speaking of the delegate we need to make our view controller conform to the
+CLLocationManagerDelegate protocol.
+
+{x: CL_delegate_declaration} 
+Add the CLLocationManagerDelegate protocol to our list of protocols in our class
+declaration. 
+
+~~~language-swift
+class EntryFormController: UIViewController, UITextFieldDelegate, UITextViewDelegate, CLLocationManagerDelegate {
+~~~
+
+{x: location_in_viewdidload} 
+We want to get our location data as soon as a user begins entering a new mood so
+add the call to the setupLocationManager() method in the viewDidLoad() method.
+
+{x: location_in_plist} 
+Add a NSLocationWhenInUseUsageDescription key in 
+Info.plist with a our message as a string. We need to do this to set a message to get 
+displayed to the user when we ask for permission to use location services.
+
+![adding_plist_location_permission](https://dl.dropboxusercontent.com/u/80807880/tuts_images/location_permission_plist.png)
+
+Now we've got our location services set up. The user will be prompted to allow
+our app to use location services. Now we need to handle location events and data. 
+The first thing we need to handle is a change in the authorization status of our
+location services. The user can authorize our app and change his/her mind later
+and deauthorize it. We want to be made of aware of any change. 
+
+{x: didChangeAuthorizationStatus_function}
+Create a method for responding to a change in location authorization by using the
+didChangeAuthorizationStatus() method of the CLLocationManagerDelegate class:
+
+~~~language-swift
+ func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus)
+    {
+      switch status
+      {
+          // User has not yet made a choice with regards to this application
+      case .NotDetermined :
+          manager.requestWhenInUseAuthorization()
+          println("prompt the user to enable location services")
+          
+          // User has explicitly denied authorization for this application, or
+          // location services are disabled in Settings.
+      case .Denied :
+          println("prompt the user to re-enable location services in settings")
+          
+          // User has granted authorization to use their location only when your app
+          // is visible to them (it will be made visible to them if you continue to
+          // receive location updates while in the background).  Authorization to use
+          // launch APIs has not been granted.
+      case .AuthorizedWhenInUse :
+          manager.startUpdatingLocation()
+          println("authorized when in use")
+          
+          // Currently only .Restricted falls here and there's not much we can do about it
+          // so we'll simply move on with our lives
+      default :
+          //do nothing
+          println("Other status")
+      }
+    }
+~~~
+
+We've added some comments to explain this switch statement. The general idea is to
+respond to a change in authorization status. What is important to know is that
+we our running our switch on the status parameter, which can take a few forms:
+.NotDetermined, .Denied, and .AuthorizedWhenInUse. In cases where we don't have
+authorization, we want to ask for it using the requestWhenInUseAuthorization() 
+method of our CLLocationManager. When we get permission, we want to call the 
+startUpdatingLocation() method to receive location data. 
+
+Now we can finally get our payoff! Here's how to capture the location data we 
+get:
+
+
+{x: didUpdateLocations_function}
+Create a method for responding to a location update event by using the 
+didUpdateLocations() method of the CLLocationManagerDelegate class.
+
+
+~~~language-swift
+func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!)
+  {
+
+  }
+~~~
+
+The didUpdateLocations() will give us access to the locations array that contains
+all of the objects containing location data. Each time we get new location data, 
+a new location of type CLLocation gets pushed onto the locations array. There
+is always at least one object in it, but can have many if updates were received
+but not delivered or if they were deferred. Regardless, we only care about the 
+most recent current location so we want to access the last member of the 
+locations array. Swift has a built in shortcut for the last member of the array, 
+.last. We use an if let statement to get set our currentLocation optional to 
+a constant if locations.lat has a value. 
+
+Here's something that we're sure might be confusing: "locations?.last as! CLLocation!."
+That is an example of forced downcasting to a explicitly unwrapped optional. Whew
+that's a mouthful. Here's our goal: we want to assign our currentLocation variable
+to an object of type CLLocation. 
 
 
