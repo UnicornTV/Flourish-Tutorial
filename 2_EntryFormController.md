@@ -12,6 +12,7 @@ New Concepts This Chapter
 * Ternary Operator
 * IBAction
 * IBOutlet 
+* Downcasting
 
 ### Creating EntryFormController.swift
 
@@ -602,7 +603,7 @@ didUpdateLocations() method of the CLLocationManagerDelegate class.
 ~~~language-swift
 func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!)
   {
-
+  currentLocation = (locations.last as! CLLocation)
   }
 ~~~
 
@@ -613,12 +614,24 @@ is always at least one object in it, but can have many if updates were received
 but not delivered or if they were deferred. Regardless, we only care about the 
 most recent current location so we want to access the last member of the 
 locations array. Swift has a built in shortcut for the last member of the array, 
-.last. We use an if let statement to get set our currentLocation optional to 
-a constant if locations.lat has a value. 
+.last. 
 
-Here's something that we're sure might be confusing: "locations?.last as! CLLocation!."
-That is an example of forced downcasting to a explicitly unwrapped optional. Whew
-that's a mouthful. Here's our goal: we want to assign our currentLocation variable
-to an object of type CLLocation. 
+The  "locations.last as! CLLocation" part of our function might be confusing so 
+let's go over it.  That is an example of forced downcasting. Downcasting is used when we are unsure 
+if a constant or variable refers to a certain type. When we are unsure we can try
+to treat it as an instance of a type using by using the as operator. Downcasting, however, 
+is pretty risky because of the uncertainty inherent in not knowing the type of the
+thing you are trying to downcast. If, for example, our variable is an array type 
+and we try to cast it as an a integer, our cast will fail. When unsure, it is
+best to use the optional form of the as operator (as?) which will cast to the 
+type we specify or return nil if unable. In this case, our locations parameter
+is AnyObject, which doesn't tell us anything about its type, so you might be 
+thinking we'd use the optional as operator to downcast to a CLLocation object. 
+However, looking at the documentation for [the didUpdateLocations event](https://developer.apple.com/library/mac/documentation/CoreLocation/Reference/CLLocationManagerDelegate_Protocol/index.html#//apple_ref/occ/intfm/CLLocationManagerDelegate/locationManager:didUpdateLocations:)
+we can see that the locations array only contains CLLocation objects. That means
+we are certain that locations.last will always refer to a CLLocation object and 
+we can avoid using the as? operator. Instead, we used forced downcasting by using
+the forced form of the type cast operator (as!) and we wrap the downcast statement in parenthesis
+to tell Xcode we really really mean to use as! as opposed to as?. 
 
 
