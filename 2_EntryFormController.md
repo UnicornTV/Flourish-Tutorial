@@ -452,6 +452,8 @@ mood you've selected!
 
 ### Getting location data 
 
+***** adding core location *****
+
 We want to be able to allow the user to enter location data for their entry. This
 can help our user determine if certain places are more helpful or hurtful to mental
 health. In this section, we are going to get permission from the user to use
