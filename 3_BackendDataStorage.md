@@ -637,7 +637,7 @@ pass into the method is what is going to be saved in our database and the comple
 handler will allow us to throw success and error messages in the callback. Here's
 saveRecord using our variables:
 
- ~~~language-swift
+~~~language-swift
   func create(completion: (success: Bool, message: String, error: NSError?) -> () ) {
     model.privateDB.saveRecord(record, completionHandler: { record, error in
         if error != nil {
@@ -665,16 +665,150 @@ take to get a response from iCloud as to whether or not our save attempt was
 successful. </i>
 
 
-Do CRUD and forget about testing. 
+{x: load_method}
+In Entry.swift, add a load method to the Entry class with the following code:
 
-### Testing, testing, 123!
+~~~language-swift
+func load(predicate: NSPredicate? = nil, sort: NSSortDescriptor? = nil)
+  {
+    let predicate = predicate ?? NSPredicate(value: true)
+    let sort = sort ?? NSSortDescriptor(key: "creationDate", ascending: false)
+    let query = CKQuery(recordType: "Entry", predicate: predicate)
+    query.sortDescriptors = [sort]
+    
+    model.privateDB.performQuery(query, inZoneWithID: nil) { results, error in
+      if error != nil
+      {
+        dispatch_async(dispatch_get_main_queue()) {
+          self.model.delegate?.errorUpdating(error)
+          println("error loading: \(error)")
+          return
+        }
+      }
+      else
+      {
+        self.records.removeAll(keepCapacity: true)
+        
+        for record in results
+        {
+          let entry = Entry(record: record as? CKRecord)
+          self.records.append(entry)
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) {
+          self.model.delegate?.modelUpdated()
+          println("successfully loaded entries")
+          return
+        }
+      }
+    }
+  }
+~~~
 
+As you may have already guess, this is the read method in our CRUD. We are going
+to query our database and retrieve results for our query to use in our app. Those
+results for our query will be ordered based on a property we pass in.  The 
+load function is going to take two parameters:  a predicate (fancy iOS jargon 
+for query) and a sort. The predicate is of type NSPredicate, which allows us to 
+define logical conditions used to restrain our search. The sort parameter is of
+type NSSortDescriptor, which takes a property name and a bool for if we want
+ascending order. Both params are optionals that default to nil. 
 
+Inside our load function we set two constants using the ?? function. This handy
+function takes an optional on the left side and, if it doesn't have a value, 
+assigns it a default value specified on the right hand side. Therefore line 1
+of our function reads: "let the constant named predicate equal the value of our
+predicate parameter if that parameter has a value. If not, our constant equals
+NSPredicate(value:true)" The value:true statement is a special iOS predicate to 
+return all entries that are nonempty. In line two we use the same logic to assign
+our sort constant the value of either the sort param or 
+NSSortDescriptor(key: "creationDate", ascending: false). As you can see, we are
+ordering our results by date in descending order. In line 3 we declare a constant
+with a value of a CKQuery instance. CKQuery's init method takes a recordType and
+a predicate which we set to our recordType "Entry" and we pass in our predicate 
+constant as well. In line 4 we use the sortDescriptors() method of CKQuery to pass
+an array of sort objects. We only have one object in the array but we could pass
+more than one search object. 
 
+Now that our variables are set up we can call the performQuery() method of 
+CKDatabase and pass in our query and a completion block. The performQuery() also
+takes a inZoneWithID parameter to constrain our results even more. We won't get
+into that right now so we just set it to nil. 
 
+The completion block of performQuery() method should look familiar as it is 
+similar to our logic in the saveRecord() method we used earlier. When we have an 
+error, we are going to finally use our model delegate's errorUpdating() method
+to pass the error to the delegate. Notice our delegate is optional because we 
+can't be sure anything has been assigned to be the delegate. 
 
+If we don't have an error we start by calling self.records.removeAll to get rid
+of any data we currently have, which we no longer need because we are about to
+receive fresh, new data from the database. The keep capacity parameter tells iOS
+to ensure the memory allotment can hold the given number of elements, even though
+the array is now empty. Think of it as a way for us to tell iOS the array we just
+emptied won't be empty for long. Next we have our for loop to iterate through 
+our results. In each loop we essentially wrap our result which of type CKRecord 
+in our Entry class so it can take advantage of all the great features in our 
+custom class. After that we append that record into our records array. 
 
+Finally, after our for loop we call the modelUpdated() method of model delegate 
+and log a success message! Ok almost there with CRUD. 
 
+Because we query the creationDate metadata of our record in our load() method, 
+we must enable the sort and query options in our CloudKit dashboard.
 
+{x: metadata_date_created} 
+In your Cloud Kit dashboard, check the sort and query checkboxes for the 
+Date Created attribute of your Entry record type. 
 
+![query_sort_enable](https://dl.dropboxusercontent.com/u/80807880/tuts_images/enable_query_sort.png)
 
+Now that that's set, on to the update method!
+
+{x: update_method}
+In Entry.swift, add an update method to the Entry class with the following code:
+
+~~~language-swift
+  func update(title: String? = nil, body: String? = nil, mood: Int? = nil, completion: (success: Bool, message: String, error: NSError?) -> () )
+  {
+    self.title = title ?? self.title
+    self.body = body ?? self.body
+    self.mood = mood ?? self.mood
+    
+    create() { success, message, error in
+      completion(success: success, message: message, error: error)
+    }
+  }
+~~~
+
+The update method is very similar to the create method. In fact, all we are
+doing is calling our create method inside of our update method. Before we do that
+we use the handy ?? again to see if any of our optional parameters as a value 
+and assigning that value to our class properties. 
+
+{x: destroy_method}
+In Entry.swift, add a destroy method to the Entry class with the following code:
+
+~~~language-swift
+func destroy(completion: (success: Bool, message: String, error: NSError?) -> () )
+  {
+    model.privateDB.deleteRecordWithID(record.recordID) { record, error in
+      if error != nil
+      {
+        println("ERR RECORD ID: \(self.record.recordID)")
+        completion(success: false, message: "could not delete entry", error: error)
+      }
+      else
+      {
+        println("DEL RECORD ID: \(self.record.recordID)")
+        completion(success: true, message: "successfully deleted entry", error: nil)
+      }
+    }
+  }
+~~~
+
+Destroy takes completion block and, as with our other create and load, we call
+a class method of CKDatabase and do some error handling. This time we call
+deleteRecordWithID(). We pass our record variable's recordID property and do our
+error handling using the same logic we used in create where we return a tuple 
+with a success Bool, a success/fail message, and an error if we have one. 
