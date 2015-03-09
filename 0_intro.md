@@ -25,9 +25,37 @@ We want this to be comprehensive and thorough, while being incredibly easy for
 beginners to go through. If you think something can be made better or is unclear,
 please comment and we will be happy to revise this tutorial over time. 
 
-### Under Construction
+### Version Compatibility
 
-This tutorial is a massive undertaking for just three guys and isn't yet complete.
-We promise to work on it daily to get it out as soon as we can. In the meantime, 
-enjoy a discount on purchasing the entire tutorial while it is still in progress. 
+Swift is constantly evolving. Make sure your Xcode is compatible with the version
+of Swift we'll be using. 
+<strong>As of March 3, 2014, this tutorial is going to use Swift 1.2 conventions and syntax </strong>
+
+
+### Creating our Xcode Project
+
+Let's do some setup. 
+
+[setting up project video](https://dl.dropboxusercontent.com/u/80807880/tuts_images/flourish_setting_up.mp4)
+
+{x: open_new_project}
+Open Xcode and select "create new Xcode project" 
+
+{x: project_setup}
+Select single page app and set the language to Swift. Set the device to iPhone 
+and let's name this project "Flourish-Teaching" to distinguish from the source 
+code, which is called "Flourish."
+
+![flourish_new_app](https://dl.dropboxusercontent.com/u/80807880/tuts_images/flourish_new_app.png)
+
+![flourish_project_name](https://dl.dropboxusercontent.com/u/80807880/tuts_images/flourish_project_name.png)
+
+{x: deployment_targets}
+Make sure your deployment target is set to iOS 8.3 
+
+![flourish_deployment_target](https://dl.dropboxusercontent.com/u/80807880/tuts_images/deployment_target.png)
+
+
+
+
 

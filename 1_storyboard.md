@@ -18,21 +18,23 @@ New Concepts This Chapter
 * Controller Nesting
 * Auto Layout
 
+[iOS Scenes Vid](https://dl.dropboxusercontent.com/u/80807880/tuts_images/flourish_scenes.mp4)
 
 {x: explore main.storyboard}
-Jump to your main.storyboard file to get acquainted. When we created our project, 
-we said we were making a tabbed application, which means xcode has already given 
+Jump to your main.storyboard file and let's get acquainted. When we created our project, 
+we said we were making a tabbed application, which means Xcode has already given 
 us a few things in our storyboard. First, notice we have several labeled boxes
-with connectors between them. This is called a scene. 
+with connectors between them. Each box represents a scene.  
 
-*** image of a scene ***
+![scene_img](https://dl.dropboxusercontent.com/u/80807880/tuts_images/scene_img.png)
 
 A scene consists of a view and a view controller. The view is represented visually
 and is what we're going to drag elements onto. The view controller will be a
 .swift file where we'll later add things programmatically. Before anyone gets 
 confused let's clear something up: everything in a storyboard can be done
-in code. Our storyboards are just a visual way for us to create swift code. Now
-looking at our storyboard sidebar, we have a list of three scenes: First Scene, 
+in code. Our storyboards are just a visual way for us to create swift code.
+
+Now looking at our storyboard sidebar, we have a list of three scenes: First Scene, 
 Second Scene, and Tab Bar Controller scene. Generally, each view controller in
 our storyboard is going to have a .swift file associated with it for us to add
 code pertaining to that storyboard. However, looking at our project navigator, 
@@ -43,10 +45,13 @@ project. Elements that are dragged onto a storybard have default functionality
 and if we are not extending that functionality, we often don't need to create a
 .swift file for that controller. 
 
+[First Build and Run](https://dl.dropboxusercontent.com/u/80807880/tuts_images/flourish_build_run.mp4)
 
 {x: first_build}
-Hit the play button in the upper left hand corner your xcode window to build and 
-run the project. This will compile our code into an app and install that app onto
+Hit the play button in the upper left hand corner your Xcode window to build and 
+run the project. 
+
+This will compile our code into an app and install that app onto
 the device specified in the build scheme. You can edit the target device by 
 selecting the dropdown menu in the active scheme editor. 
 
@@ -63,6 +68,9 @@ views.
 
 ### Nesting View Controllers
 
+[Nesting Vid](https://dl.dropboxusercontent.com/u/80807880/tuts_images/nesting.mp4)
+
+
 It is good practice in iOS to encapsulate functionality in its own view controller 
 to keep our controller code short and focused. With that in mind, we want to 
 introduce the concept of a "container" view controller. A container view controller
@@ -78,14 +86,16 @@ design could benefit from it. The way we are going to approach this is to
 create container controllers for each of our tab views and we are then
 going to create content controllers within each. It is important to note at this
 point that you can always nest a controller within a controller and there are few
-hard and fast rules about when to nest. However, there are some controllers that 
+hard and fast rules about when to nest. 
+
+However, there are some controllers that 
 are almost always container controllers and should <strong> always </strong> 
 have a nested content controller if you'd like to display content within that 
 controller. One such controller is a navigation controller, whose purpose is to 
 manage navigation of hierarchical content. We are actually going to use a 
 navigation controller as our container view because some of our tabs are going 
-to have views we navigate to from the initial view. Navigating "down" from an 
-initial view to other views and hitting  a back button to get to the previous view
+to have views that we navigate to from the initial view. Navigating "down" from an 
+initial view to other views and hitting a back button to get to the previous view
 is called view stacking and we can visualize a physical stack of views. 
 
 ![view_controller_stack](https://developer.apple.com/library/ios/featuredarticles/ViewControllerPGforiPhoneOS/Art/navigation_interface_2x.png)
@@ -108,7 +118,7 @@ contains two controllers: the container controller and the first content control
 in the stack. The first content controller in a stack is called the "root" view
 controller. 
 
-*** image with dragging and highlighting object library ****
+[Connecting Tab Controller to View Vid](https://dl.dropboxusercontent.com/u/80807880/tuts_images/flourish_segue_tab.mp4)
 
 {x: tab_controller_relationship} 
 Ctrl-click on the Tab Controller Scene and drag an outlet onto your new navigation
@@ -128,7 +138,7 @@ which isn't what we need. Click on the root view controller scene and delete it
 entirely. 
 
 {x: add_view_to_nav} 
-Drag a plain ol' view object from the object library and drop it onto the 
+Drag a plain ol' view controller object from the object library and drop it onto the 
 storyboard and ctrl-drag an outlet from the navigation controller scene to the 
 new view scene. When you drop the outlet, select "root view controller" from the 
 Relationship Segue menu. 
@@ -140,42 +150,63 @@ Relationship Segue menu.
 {x: adding_label} 
 Let's add a label to this new view by dragging a label object from the
 object library and drop it onto our new navigation controller scene's root view.
-Next, double click on the label to change the label text to "Calendar view." 
+Next, double click on the label to change the label text to "Entry view." 
 After that, double click on the tab bar item's name and change the name from item 
-to calendar. Build and run your project to confirm we've added a third view.  
+to Entry. 
 
-### Adding views to our default project 
+{x: check_third_view}
+Build and run your project to confirm we've added a third view. 
 
-Our app is going to consist of 5 views: 
+{x: delete_default_controllers} 
+The default scenes in our storyboard aren't set up the way we want so go ahead
+and delete the First Scene and Second Scene scenes from the storyboard. You
+should now only have three total scenes: a tab bar controller, a navigation controller,
+and a view controller. 
+
+![one_view_left](https://dl.dropboxusercontent.com/u/80807880/tuts_images/first_view_screenshot.png)
+
+### Adding the other views to our default project 
+
+[Adding Tabs Vid](https://dl.dropboxusercontent.com/u/80807880/tuts_images/adding_tabs.mp4)
+
+Our app is going to consist of 6 total views: 
 * Authentication
-* My Entries
-* New Entry 
+* Entry
+* Journal
 * Calendar
 * Trends
 * Settings
 
 All of these views, with the exception of the authentication view, are going to 
-be tabs in our tab bar. Currently our tab bar only has three views, so let's add 
-three more. 
+be tabs in our tab bar. Currently our tab bar only has one view, so let's add 
+four more.  
 
 {x: adding_calendar_trend} 
-Now we need to add two more views so follow the same procedure as we did for our
-calendar scene to create a trend scene and a settings scene. 
+Follow the same procedure as we did for our Entry scene to create the remaining
+views: Journal, Calendar, Trends, and Settings. 
 
-{x: renaming_existing_views} 
-We need to delete the existing views currently labeled "first" and "second" and
-create two new navigation controller/root controller pairs for the "entry" and 
-"journal" views to round out our tabs. 
+Your tab bar now should have five items and you should have a total of five 
+navigation controller/view controller pairs. 
+
+![all_tabs](https://dl.dropboxusercontent.com/u/80807880/tuts_images/all_tabs.png)
 
 ### Adding images to tab bar items 
 
+[Adding Tab Icons and Names Vid](https://dl.dropboxusercontent.com/u/80807880/tuts_images/adding_tab_icons_names.mp4)
+
 We are now going to add our custom tab icons to our tab bar. Xcode image assets
 are all stored in a images.xcassets folder, which you can find in the project 
-navigator. Open up images.xcassets and you'll see the square and circle images
+navigator. 
+
+{x: download_icons}
+Open up images.xcassets and you'll see the square and circle images
 that are used in the default tab bar icons. This isn't an illustration tutorial, 
 so you can go ahead and download our 
 [icon pack](https://dl.dropboxusercontent.com/u/80807880/Icons.zip). Unzip the
-file and you'll have an icons folder. Drag the icons folder into your xcode 
+file and you'll have an icons folder. 
+
+{x: add_icons}
+Drag the icons folder into your xcode 
 project's images.xcassets. You'll now see your icons in the images.xcassets folder. 
 
 ![tab_icons_added](https://dl.dropboxusercontent.com/u/80807880/tuts_images/adding_tab_assets.png)
@@ -185,12 +216,18 @@ guidelines](https://developer.apple.com/library/ios/documentation/UserExperience
 from Apple. 
 
 Now that we have our image assets in our project, we can go back to main.storyboard
-and assign some of those images to our tab bar items. In your entry scene, click
+and assign some of those images to our tab bar items. 
+
+{x: add_tab_image}
+In your entry scene, click
 on the tab bar item. Once selected, turn your attention to the attributes 
 inspector's "Bar Item" section. There, you'll see an image field with a dropdown
 menu. The dropdown options correspond to the names of your image assets in your
 image.xcassets folder. If you're using our icons, select the "edit" icon for this
-tab bar item. Now repeat this process to select the appropriate image for the
+tab bar item. 
+
+{x: repeat_tab_image}
+Now repeat this process to select the appropriate image for the
 rest of the tab bar items. 
 
 The images for each tab bar item are as follows:
@@ -203,9 +240,8 @@ The images for each tab bar item are as follows:
 
 ### Adding UI Elements with Auto Layout 
 
-If you build and run our project so far, you'll notice that the two default tabs
-have labels neatly centered in the middle of the screen, while the labels we added
-to our new tabs appear in a different place than where we dropped them into the
+If you build and run our project so far, you'll notice label we added
+to our entry view tabs appear in a different place than where we dropped it into the
 scene. This is because we haven't really positioned our label yet. In order to 
 make it easier to design interfaces for multiple screen sizes, the wiz kids at 
 Apple gave us Auto Layout. As Apple describes "Auto Layout is a system that lets 
@@ -220,11 +256,15 @@ Before moving on, familiarize yourself with the ["Auto Layout menus in Xcode"](h
 Now let's go through a concrete example of auto layout by creating our new entry
 form UI. Here's a wire frame for this view:
 
+![x: entry_wireframe](https://dl.dropboxusercontent.com/u/80807880/tuts_images/flourish_entry_wireframe.png)
+
 As you can see we have a text field for entering a title for your entry, a
 select button to select a mood from a set of options, a text field for the body
 of your journal entry, and a save button to save your journal entry. Let's select
 our new entry scene and begin building our interface. 
 
+{x: remove_entry_label}
+The "entry scene" label has served its purpose. Go ahead and delete it. 
 
 {x: background_color}
 Select your Entry view and change the background color to a dark blue in the attributes inspector.
@@ -238,11 +278,7 @@ add a 40 point height constraint in the Pin menu.
 Change the text property of our text field to "Date" in the attributes inspector.
 
 
-![Entry_general_constraints](https://dl.dropboxusercontent.com/u/80807880/tuts_images/general_constraints.png)
-
-{x: entry_height_constraint}
-Drag a text field object from the object library into your New Entry view and 
-add a 40 point height constraint in the Pin menu.
+![date_height_constraint](https://dl.dropboxusercontent.com/u/80807880/tuts_images/date_field_height_constraint.png)
 
 Make sure to select "items of new constraints" from the update frames dropdown in
 the Pin menu. This option sets these constraints only the selected objects in our view, 
@@ -275,9 +311,9 @@ The previous two steps have set our date field to have a 40 point left margin an
 to fill the rest of the horizontal space in the container. 
 
 {x: text_field_container_constant}
-Ctrl-drag from the divider to the containing view and this time select top space 
-to layout guide. In the date field's size inspector, edit the top space to 
-top layout guide to 15 points. 
+Ctrl-drag from the text field to the top layout guide view and vertical space option.
+In the date field's size inspector, edit the top space to: top layout guide constraint
+to equal 15 points. 
 
 Here's what your date field's constraints should look like in the size inspector:
 
@@ -290,29 +326,28 @@ Now we want to add an icon for this text field. In order to that, we need to
 add an image view object to our view. 
 
 {x: add_icon}
-Drag an image view from the object library and drop it onto our view. Set a
-height constraint of 13 points and a width constraint of 18 points. 
+Drag an image view from the object library and drop it onto your entry view. Set a
+height constraint of 13 points and a width constraint of 18 points in the pin menu. 
 
 {x: add_background_image}
 Change image property of our new image view to the pencil icon, which can be 
-downloaded and added to your project [here](https://dl.dropboxusercontent.com/u/80807880/UI.zip). Feel free to also use your own
-icons if you want. 
+downloaded and added to your project [here](https://dl.dropboxusercontent.com/u/80807880/UI.zip). Feel free to also use your own icons if you want. 
 
 We now want to horizontally align the center of our image with the center of our
 text field. This is going to require some math. We have a 40 points tall date 
 field with a 15 point top margin. Our icon, however is only 18 points tall and 
-needs a top margin that will ensure it is always aligned with the divider. What 
+needs a top margin that will ensure its center is always aligned with the divider. What 
 we can do is simply take half of the difference in heights between the date field and the
 icon and add that to the date field's top margin. Our date field is 22 pixels 
 taller with a 15 point top margin. That means we need a 26 point top margin on 
 our icon (0.5 * 22 + 15).
 
 {x: add_icon_top}
-Set a 37 point top margin to the icon by ctrl-dragging from the icon to the 
+Set a 26 point top margin to the icon by ctrl-dragging from the icon to the 
 container view and selecting "top space to layout guide."
 
 {x: add_icon_left}
-Add a 10 point left margin using the same ctrl-drag technique we've been using. 
+Add a 10 point leading space to container using the same ctrl-drag technique we've been using. 
 
 Here's what our view should look like now. 
 
@@ -321,26 +356,26 @@ Here's what our view should look like now.
 Now we need to add a divider that is going to separate our date field from the 
 other input objects in that app. 
 
-{x: add_divider}
-Drag an view from the object library and drop it onto our view. Set a
-height constraint of 1 point. 
-
 {x: rename_divider}
 Change the view's label property in the document section of the identity inspector
 to "Divider."
+
+{x: add_divider}
+Drag an view from the object library and drop it onto our view. Set a
+height constraint of 1 point. 
 
 {x: divider_left_right}
 Set a leading and trailing margin constraint of 0 between our Divider and its
 containing view. 
 
-So far we've estbalished a relative width of our divider with leading and 
+So far we've established a relative width of our divider with leading and 
 trailing constraints. Now we need to give our divider a vertical position. 
 Heretofore we've set a top margin between our elements and the top layout guide. 
 For the divider, however, we are going to set a margin relative to the date
 field, not the top layout guide. 
 
 {x: divider_top}
-Set a top for the divider relative to the date view. In the document outline, 
+Set a top for the divider relative to the date field. In the document outline, 
 Ctrl-drag from the divider to the date field and select "vertical spacing" option.
 In the divider's size inspector, change the top space to: Date constant to 
 1 point. 
@@ -350,7 +385,7 @@ Here's what the divider's size inspector should now look like:
 ![divider_constraints](https://dl.dropboxusercontent.com/u/80807880/tuts_images/divider_constraints.png)
 
 {x: date_field_background}
-To match our mockup, we now want to change our date field's border style to 
+In the attributes inspector, we now want to change our date field's border style to 
 transparent and our font color to white in the date field's attribute inspector.
 
 Here's what our UI looks like at this point: 

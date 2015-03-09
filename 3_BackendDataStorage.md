@@ -6,10 +6,11 @@ New Concepts This Chapter
 * Singleton Pattern
 * Getters and Setters
 * Data Encryption
+* Grand Central Dispatch
 
 ### Introduction
 We've heretofore focused on the view and controllers aspect of the MVC framework. 
-We've shown to layout an interface in storyboards and how to add functionality 
+We've shown how to layout an interface in storyboards and how to add functionality 
 in a view controller file. You can currently create a journal entry, but you can't
 save it. What good is that? This is where the M of the MVC framework comes in. We
 are going to set up a data model that represents our journal entries and use the
@@ -34,26 +35,29 @@ Choose the xcode project from the project navigator and navigate to the capabili
 pane. Toggle iCloud on in the capabilities pane.
 
 Toggling on the iCloud capabilities tells xcode to configure our app to use iCloud.
-An example of what xcode does for is it creates code signing and provisioning 
+An example of what xcode does for us it creates code signing and provisioning 
 assets for you as you need them. 
 
-*** image ***
+{x: choose_account}
+When you toggle on iCloud capabilities, you're prompted to select a developer
+account to associate with this app. 
+
+![choose_icloud_account](https://dl.dropboxusercontent.com/u/80807880/tuts_images/choose_account_icloud.png)
 
 {x: services_checkboxes}
 In the iCloud menu of the capabilities pane, check the CloudKit box in the services
 menu and make sure the key-vale storage box is also checked. 
-
-*** image ***
 
 {x: containers_checkboxes}
 Right below services is the containers menu. Select the "specify custom containers"
 radio button and select the checkbox that corresponds to your bundleID. You should
 see you are all set up by looking at the steps below the containers section. 
 
-This is what your iCloud pane should look like:
+{x: fixing_errors}
+There a few different errors that can occur when enabling iCloud capabilities. 
+Usually hitting the "fix error" button fixes it. Example below:
 
-***image*** 
-
+![icloud_error_example](https://dl.dropboxusercontent.com/u/80807880/tuts_images/icloud_error.png)
 
 ### Defining our Schema
 
@@ -90,6 +94,12 @@ ensure that we are saving all of the essential information for our entries.
 In the detail pane, select the "add attribute" link and add an attribute with 
 an attribute name of "Body." The attribute type is String and we can leave the 
 index checkboxes all checked. 
+
+{x: other_attributes}
+Add Title, Location, and LocalStorageID attributes to your Entry record type 
+and select the attribute type and index checkboxes for each to match the image below:
+
+![entry_record_table](https://dl.dropboxusercontent.com/u/80807880/tuts_images/entry_record_table.png)
 
 ### Model, User, and Entry models
 
@@ -176,8 +186,6 @@ the container object associated with the current app's content. That container
 object contains both private and public data as properties, so we'll assign our
 publicDB and privateDB constants to the public and private data properties of our
 container object. Notice how our class properties map well to the CloudKit dashboard. 
-
-*** image ***
 
 To finalize our init() method we assign the user constant to an instance of the 
 user class and sets its container property to our container constant. Next we 
