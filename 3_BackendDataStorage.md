@@ -30,6 +30,8 @@ simple GUI for creating our data models.
 
 ### Enabling Cloud Kit in Our App
 
+{video: flourish_cloudkit_capability}
+
 {x: cloud_kit_build_setting}
 Choose the xcode project from the project navigator and navigate to the capabilities
 pane. Toggle iCloud on in the capabilities pane.

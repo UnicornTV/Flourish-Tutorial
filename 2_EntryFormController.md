@@ -16,6 +16,8 @@ New Concepts This Chapter
 
 ### Creating EntryFormController.swift
 
+{video: create_link_entry_form}
+
 We've already created a view controller using storyboards in our interface 
 chapter. What we want to do now is continue to work on that view controller
 in code. To do that we need to create a .swift file that we then link to our
@@ -77,6 +79,8 @@ Add the following to your EntryFormController.swift file.
 
 ### Mood Dropdown 
 
+{video: flourish_picker_feelings_constants}
+
 Let's start with what we need for our mood picker. Our end goal is to get our 
 picker to look like this
 
@@ -86,7 +90,6 @@ Our dropdown will be built by
 placing the six mood option buttons in front of an image background. As always 
 let's begin by defining our constants and variables. The first one we will define 
 is a constant for our picker dropdown background. 
-
 
 {x: create_picker_constant}
 Add the following code to the top of your EntryFormController.swift file at the
@@ -126,6 +129,8 @@ represent a better mood and high numbers will represent worse moods.
 We will then use the array member at index to retrieve the button title and 
 color, which we will use to create the button label.Once we have our constants, 
 we will position and style our picker. 
+
+{video: flourish_picker_hidden_alpha}
 
 {x: picker_properties}
 Start setting up the picker by typing following into the viewDidLoad() method: 
@@ -173,6 +178,8 @@ set our properties attributes inspector. The reason we did not draw our dropdown
 in the interface builder is because we are going to be problematically creating 
 what's called <i>subviews</i> of the button.
 
+{video: flourish_subview_superview}
+
 Subviews and superviews refer to a parent-child relationship between views. The
 superview is the container for the subview. This means that any coordinates a 
 subview has, start from the upper left corner of the superview. It also means 
@@ -209,6 +216,8 @@ Ok we have our picker. Reset alpha to 0 and the hidden to true and let's move on
 
 Now that we have the picker, we need to mood buttons that go inside the picker. 
 For that we are going to add a subview to picker for each mood option. 
+
+{video: flourish_ui_color_helper}
 
 Before we can do that we need to add our first helper file. What this is going
 to do is extend the UIColor class to accept hex strings and interpret them as 
@@ -297,6 +306,8 @@ Now anything we want to pass a string represented a color's hex code, we simply
 call UIColor(rgba: hex_string). We'll see a concrete example shortly, when we 
 write a method to create our loop. 
 
+{video: flourish_picker_loop}
+
 {x: add_button_loop}
 In the viewDidLoad method, after your picker.userInteractionEnabled = true 
 statement but before view.addSubview(picker) add the following: 
@@ -353,7 +364,9 @@ our next iteration of the loop.
 We've actually just created a lovely picker, but before we can build and run to 
 see our beautiful dropdown menu, we need methods that will show and hide our dropdown. 
 
-{x: open_picker}
+{video: flourish_open_picker}
+
+{x: open_picker_method}
 Create an openPicker() method with the following code:  
 
 ~~~language-swift
@@ -402,6 +415,7 @@ of animateWithDuration simply denotes a block of code to run after the animation
 has completed. In this case we aren't doing anything after the animation so we 
 leave the closure body empty.
 
+{video: flourish_close_picker_method}
 
 {x: close_picker_method}
 Now that we have an open picker method, we need a method with the converse of all
@@ -431,6 +445,8 @@ subviews. We've added the picker (and by extension it's subviews) to our view
 and we wrote methods for opening and closing our picker. Now we need to call
 the openPicker() and closePicker() methods to show and hide our picker when our 
 app is running. 
+
+{video: flourish_toggle_picker_method}
 
 {x: toggle_picker}
 To toggle our picker, write a method that calls closePicker() if the picker is open
@@ -484,11 +500,12 @@ touchUpInside event fires, i.e. when a user taps the button.
 Now finally, build and run. Tapping on the select button will reveal toggle our
 picker with the mood buttons we created! 
 
-
 Now we need to write some more code to  allow us to set a mood when we tap a 
 mood button. 
 
 ###IBOutlet 
+
+{video: flourish_feeling_button}
 
 {x: declare_feelingButton_IBoulet}
 To reflect a set mood, we are going to change the label of our select button in 
@@ -519,6 +536,8 @@ builder object to our IBOulet variable. This works very similar to linking IBAct
 With both our main.storyboard file and our EntryFormController.swift files open, 
 Ctrl-click on the select button in the storyboard and drag it onto the feelButton
 variable declaration. 
+
+{video: flourish_set_mood_method}
 
 Now we have access to our interface builder button in our controller, which means we can change
 its label property to our selected mood. Back in our EntryFormController,lets 
@@ -554,6 +573,8 @@ can help our user determine if certain places are more helpful or hurtful to men
 health. In this section, we are going to get permission from the user to use
 location services so we can store the user's location along with the other 
 journal entry data. 
+
+{video: flourish_cllocationmanager_plist}
 
 {x: adding_core_location_libary}
 First thing we need to do is import the Core Location library. You'd now have
@@ -650,6 +671,8 @@ Info.plist with a our message as a string. We need to do this to set a message t
 displayed to the user when we ask for permission to use location services.
 
 ![adding_plist_location_permission](https://dl.dropboxusercontent.com/u/80807880/tuts_images/location_permission_plist.png)
+
+{video: flourish_location_delegate}
 
 Now we've got our location services set up. The user will be prompted to allow
 our app to use location services. Now we need to handle location events and data. 
