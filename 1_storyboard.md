@@ -18,7 +18,7 @@ New Concepts This Chapter
 * Controller Nesting
 * Auto Layout
 
-[iOS Scenes Vid](https://dl.dropboxusercontent.com/u/80807880/tuts_images/flourish_scenes.mp4)
+{video: flourish_scenes}
 
 {x: explore main.storyboard}
 Jump to your main.storyboard file and let's get acquainted. When we created our project, 
@@ -45,7 +45,7 @@ project. Elements that are dragged onto a storybard have default functionality
 and if we are not extending that functionality, we often don't need to create a
 .swift file for that controller. 
 
-[First Build and Run](https://dl.dropboxusercontent.com/u/80807880/tuts_images/flourish_build_run.mp4)
+{video: flourish_build_and_run}
 
 {x: first_build}
 Hit the play button in the upper left hand corner your Xcode window to build and 
@@ -68,8 +68,7 @@ views.
 
 ### Nesting View Controllers
 
-[Nesting Vid](https://dl.dropboxusercontent.com/u/80807880/tuts_images/nesting.mp4)
-
+{video: nesting}
 
 It is good practice in iOS to encapsulate functionality in its own view controller 
 to keep our controller code short and focused. With that in mind, we want to 
@@ -118,7 +117,7 @@ contains two controllers: the container controller and the first content control
 in the stack. The first content controller in a stack is called the "root" view
 controller. 
 
-[Connecting Tab Controller to View Vid](https://dl.dropboxusercontent.com/u/80807880/tuts_images/flourish_segue_tab.mp4)
+{video: flourish_segue_tab}
 
 {x: tab_controller_relationship} 
 Ctrl-click on the Tab Controller Scene and drag an outlet onto your new navigation
@@ -167,7 +166,7 @@ and a view controller.
 
 ### Adding the other views to our default project 
 
-[Adding Tabs Vid](https://dl.dropboxusercontent.com/u/80807880/tuts_images/adding_tabs.mp4)
+{video: adding_tabs}
 
 Our app is going to consist of 6 total views: 
 * Authentication
@@ -192,7 +191,7 @@ navigation controller/view controller pairs.
 
 ### Adding images to tab bar items 
 
-[Adding Tab Icons and Names Vid](https://dl.dropboxusercontent.com/u/80807880/tuts_images/adding_tab_icons_names.mp4)
+{video: adding_tab_icon_names}
 
 We are now going to add our custom tab icons to our tab bar. Xcode image assets
 are all stored in a images.xcassets folder, which you can find in the project 
@@ -249,6 +248,7 @@ you lay out your app’s user interface by creating a mathematical description o
 the relationships between the elements. You define these relationships in terms 
 of constraints either on individual elements, or between sets of elements." 
 
+{video: flourish_auto_layout_text_field}
 
 {x: auto_layout}
 Before moving on, familiarize yourself with the ["Auto Layout menus in Xcode"](https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/WorkingwithConstraints/WorkingwithConstraints.html#//apple_ref/doc/uid/TP40010853-CH8-SW3) 
@@ -276,7 +276,6 @@ add a 40 point height constraint in the Pin menu.
 
 {x: set_date_text}
 Change the text property of our text field to "Date" in the attributes inspector.
-
 
 ![date_height_constraint](https://dl.dropboxusercontent.com/u/80807880/tuts_images/date_field_height_constraint.png)
 
@@ -324,6 +323,8 @@ constraints are working properly.
 
 Now we want to add an icon for this text field. In order to that, we need to 
 add an image view object to our view. 
+
+{video: flourish_auto_layout_title_icon}
 
 {x: add_icon}
 Drag an image view from the object library and drop it onto your entry view. Set a
@@ -393,6 +394,10 @@ Here's what our UI looks like at this point:
 ![ui_text_divider_icon](https://dl.dropboxusercontent.com/u/80807880/tuts_images/ui_icon_field_divider.png)
 
 ### Finishing the Entry Form UI 
+
+{video: flourish_auto_label_select}
+
+{video: flourish_finishing_entry_layout}
 
 We've gone over setting Auto Layout constraints between an object and its container
 as well as between an object and another object. At this point, we aren't going 

@@ -222,7 +222,7 @@ calling this folder "Helpers".
 
 {x: models_class}
 Create a new file in your project navigator by going to file > new > file > 
-swift file and name it "UIColor.swift". Place this file in your Helpers folder.
+swift file and name it "UIColorHelper.swift". Place this file in your Helpers folder.
 
 {x: ui_color_code}
 In UIColorHelper.swift, add the following code: 
@@ -579,7 +579,6 @@ currentLocation is of type CLLocation.
   var currentLocation: CLLocation?
 ~~~ 
 
-*** revisit the optional thang ***
 Notice the CLLocationManager type is an implicitly unwrapped optional because
 we are going to assign it to an instance of the CLLocationManager class, therefore
 it will always have a value.  Our currentLocation variable is an optional because

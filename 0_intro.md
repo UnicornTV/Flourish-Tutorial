@@ -36,7 +36,7 @@ of Swift we'll be using.
 
 Let's do some setup. 
 
-[setting up project video](https://dl.dropboxusercontent.com/u/80807880/tuts_images/flourish_setting_up.mp4)
+{video: flourish_setting_up}
 
 {x: open_new_project}
 Open Xcode and select "create new Xcode project" 
@@ -45,8 +45,6 @@ Open Xcode and select "create new Xcode project"
 Select single page app and set the language to Swift. Set the device to iPhone 
 and let's name this project "Flourish-Teaching" to distinguish from the source 
 code, which is called "Flourish."
-
-![flourish_new_app](https://dl.dropboxusercontent.com/u/80807880/tuts_images/flourish_new_app.png)
 
 ![flourish_project_name](https://dl.dropboxusercontent.com/u/80807880/tuts_images/flourish_project_name.png)
 

@@ -172,7 +172,7 @@ let globalModelSingleton = Model()
 
 In the first line, we've declared a class called Model. We use the @objc keyword
 to expose our swift class to our objective-c classes, in case we need to import 
-that class as into an objective-c header file. Lines 8-12 create our properties 
+that class as an objective-c header file. Lines 8-12 create our properties 
 for our model class. The delegate property will refer to the class that conforms
 to our newly-defined ModelDelegate protocol. User will be assigned to the user
 data from our Users record type in our database. You might have noticed we have 
@@ -196,25 +196,7 @@ a new one. To do that, we assign a constant to an instance of our Model class. W
 ensure to define our constant outside of the class declaration. Then we create a
 type method that returns the same instance of the class every time its called. 
 
-Now we're going to create another class, called User. 
-
-{x:user_class}
-Create a new file in your project navigator by going to file > new > file > 
-swift file and name it "User.swift". Place this file in your Models folder. 
-
-~~~language-swift
-import Foundation
-import CloudKit
-~~~
-
-{x:users_import_cloudkit}
-In Models.swift, import Cloud Kit right below the import Foundation statement in
-the file. 
-
-****** finish this when clay redoes the user model *******
-
-
-We we're going to create one last class in our models folder: Entry.
+We're now going to create one last class in our models folder: Entry.
 
 {x:entry_class}
 Create a new file in your project navigator by going to file > new > file > 
