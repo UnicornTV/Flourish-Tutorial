@@ -369,6 +369,8 @@ logic.
 
 ### Encrypting Our Data
 
+{video: flourish_encryption_intro}
+
 Let's take a break for a minute from finishing up our Entry class to set up some
 data encryption. Encryption? For a data app? Yes. Look we can be confident Apple
 takes some care in securing iCloud data, but its best you do your own encryption 
@@ -397,6 +399,8 @@ Swift, we need to add a file called a bridging header.
 Create a config folder by going to file > new > group and calling this folder 
 "Config". This folder will store our bridging header. 
 
+{video: flourish_bridging_header}
+
 {x: bridging_header}
 Create a bridging header by going to file > new > file and selecting Header file.
 Call this new file "Bridging-Header.h" 
@@ -412,6 +416,8 @@ to swift. Add the following to the Bridging-Header.h file:
 Now that we have our encryption library imported, we can start to use the it!
 Our encryption library added a class we can call called Encryptor that has a few
 simple methods that we will use in a custom class called AuthHelper. 
+
+{video: flourish_auth_helper}
 
 {x: helper_folder}
 Create a helper folder by going to file > new > group and calling this folder 
@@ -446,11 +452,13 @@ so we don't want to restrict access to it using the public keyword during the
 declaration. Finally we are going to have our AuthHelper class as a subclass of 
 NSObject.
 
+{video: flourish_encrypt_method}
+
 {x: password_constant}
-In our AuthHelper class, let's define a constant named "key" and assign it a value of "testkey"
+In our AuthHelper class, let's define a class variable named named "key" and assign it a value of "testkey"
 
 ~~~language-swift
-  let key = testKey
+  class var key:String {return "testKey" }
 ~~~
 
 
@@ -499,6 +507,7 @@ tuple with both the string and data object versions of our encrypted data.
 Now we need to be able to decrypt data that has previously been encrypted. The 
 logic for this method is going the inverse logic we used to in our encrypt function. 
 
+{video: flourish_decrypt_method}
 
 {x: decrypt_method}
 Add an decrypt type method to our AuthHelper class with the following code:
@@ -509,16 +518,16 @@ Add an decrypt type method to our AuthHelper class with the following code:
     let pass = (password != nil) ? password : self.password
     let encryptedData = NSData(base64EncodedString: input, options: NSDataBase64DecodingOptions(rawValue: 0))
     let decryptedData = Decryptor.decryptData(encryptedData, password: pass, error: nil)
-    let decryptedText = Encryptor.stringFromData(decryptedData)
+    let decryptedText = (NSString(data: decryptedData, encoding: NSUTF8StringEncoding) as? String)
     
     return (string: decryptedText, data: decryptedData)
   }
 ~~~
 
-*** replace password with key ****
-
 Now we need to hop back into our Entry.swift file so we can do a bit of refactoring
 to show how simple it is to use our encryption methods. 
+
+{video: flourish_refactor_entry}
 
 {x: encrypt_entry_properties}
 In Entry.swift, refactor your title and body properties to encrypt data in their
@@ -575,6 +584,8 @@ are only encrypting the title and body properties of the entry in this app, but
 feel free to encrypt as much or as little as you want.  
 
 ### CRUD Operations
+
+{video: flourish_CRUD_create}
 
 Now that we've set up our properties and learned about encrypting our data, we 
 should jump into CRUD (Create Read Update Delete) methods in our Entry class. 
@@ -648,13 +659,42 @@ a message and an error we can display to the user. If we succeed in saving our r
 we return a success tuple with a nil error and a message to indicate we've 
 saved the data. 
 
-# ask about self.record = record and dispatch async
+{video: flourish_CRUD_create_async}
 
-<i>Draft: Now we can make our call to the saveRecord method asyncronous. The reason we do 
+Now we can make our call to the saveRecord method asyncronous. The reason we do 
 that is we don't want to hold up the execution of the rest of our code waiting 
 for the completion closure to execute. We have no idea how long it is going to 
 take to get a response from iCloud as to whether or not our save attempt was 
-successful. </i>
+successful. In order to make execution of our code asyncronous, we use the dispatch_async
+class of Apple's Grand Central Dispatch, which adds a block to a dispatch queue 
+and allows the rest of our thread to continue to execute. 
+
+{x: GCD}
+If you want to learn more about Grand Central Dispatch as a whole, [read the
+documentation on it](https://developer.apple.com/library/prerelease/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/index.html#//apple_ref/c/func/dispatch_async)
+
+{x: async_rewrite}
+Refactor your create method to use the dispatch_async_method which results in the
+following code:
+
+~~~language-swift
+  func create(completion: (success: Bool, message: String, error: NSError?) -> () )
+  {
+    model.privateDB.saveRecord(record) { record, error in
+      dispatch_async(dispatch_get_main_queue()) {
+        if error != nil
+        {
+          completion(success: false, message: "Could not save to the cloud. Encrypted and saved locally instead.", error: error)
+        }
+        else
+        {
+          self.record = record
+          completion(success: true, message: "Your entry was saved successfully!", error: nil)
+        }
+      }
+    }
+  }
+~~~
 
 
 {x: load_method}
@@ -697,6 +737,8 @@ func load(predicate: NSPredicate? = nil, sort: NSSortDescriptor? = nil)
   }
 ~~~
 
+{video: flourish_CRUD_load_constants}
+
 As you may have already guess, this is the read method in our CRUD. We are going
 to query our database and retrieve results for our query to use in our app. Those
 results for our query will be ordered based on a property we pass in.  The 
@@ -721,6 +763,8 @@ a predicate which we set to our recordType "Entry" and we pass in our predicate
 constant as well. In line 4 we use the sortDescriptors() method of CKQuery to pass
 an array of sort objects. We only have one object in the array but we could pass
 more than one search object. 
+
+{video: flourish_CRUD_load_perform_query}
 
 Now that our variables are set up we can call the performQuery() method of 
 CKDatabase and pass in our query and a completion block. The performQuery() also
@@ -773,10 +817,16 @@ In Entry.swift, add an update method to the Entry class with the following code:
   }
 ~~~
 
+
+{video: flourish_CRUD_update}
+
 The update method is very similar to the create method. In fact, all we are
 doing is calling our create method inside of our update method. Before we do that
 we use the handy ?? again to see if any of our optional parameters as a value 
 and assigning that value to our class properties. 
+
+
+{video: flourish_CRUD_destroy}
 
 {x: destroy_method}
 In Entry.swift, add a destroy method to the Entry class with the following code:
