@@ -764,7 +764,7 @@ constant as well. In line 4 we use the sortDescriptors() method of CKQuery to pa
 an array of sort objects. We only have one object in the array but we could pass
 more than one search object. 
 
-{video: flourish_CRUD_load_perform_query}
+{video: flourish_CRUD_load_query}
 
 Now that our variables are set up we can call the performQuery() method of 
 CKDatabase and pass in our query and a completion block. The performQuery() also
