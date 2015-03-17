@@ -46,12 +46,12 @@ Select single page app and set the language to Swift. Set the device to iPhone
 and let's name this project "Flourish-Teaching" to distinguish from the source 
 code, which is called "Flourish."
 
-![flourish_project_name](https://dl.dropboxusercontent.com/u/80807880/tuts_images/flourish_project_name.png)
+![flourish_project_name](/tuts_images/flourish_project_name.png)
 
 {x: deployment_targets}
 Make sure your deployment target is set to iOS 8.3 
 
-![flourish_deployment_target](https://dl.dropboxusercontent.com/u/80807880/tuts_images/deployment_target.png)
+![flourish_deployment_target](/tuts_images/deployment_target.png)
 
 
 
