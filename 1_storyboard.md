@@ -26,7 +26,7 @@ we said we were making a tabbed application, which means Xcode has already given
 us a few things in our storyboard. First, notice we have several labeled boxes
 with connectors between them. Each box represents a scene.  
 
-![scene_img](https://dl.dropboxusercontent.com/u/80807880/tuts_images/scene_img.png)
+![scene_img](/tuts_images/scene_img.png)
 
 A scene consists of a view and a view controller. The view is represented visually
 and is what we're going to drag elements onto. The view controller will be a
@@ -55,7 +55,7 @@ This will compile our code into an app and install that app onto
 the device specified in the build scheme. You can edit the target device by 
 selecting the dropdown menu in the active scheme editor. 
 
-![play_button](https://dl.dropboxusercontent.com/u/80807880/tuts_images/play_button.png)
+![play_button](/tuts_images/play_button.png)
 
 {x: set_target}
 Let's select iPhone 6 as our target device and run our app. This will launch our 
@@ -127,9 +127,9 @@ view controller scene. Under "relationship segue", select the "view controller"
 option. Once you do that you'll notice your tab bar controller now has a third tab 
 option.
 
-![adding_segue_navigation](https://dl.dropboxusercontent.com/u/80807880/tuts_images/adding_segue_navigation.png) 
+![adding_segue_navigation](/tuts_images/adding_segue_navigation.png) 
 
-![adding_tab_item](https://dl.dropboxusercontent.com/u/80807880/tuts_images/adding_tab_item.png)
+![adding_tab_item](/tuts_images/adding_tab_item.png)
 
 {x: removing_default_table_view} 
 Sadly our default root view controller in storyboard is a TableViewController, 
@@ -142,9 +142,9 @@ storyboard and ctrl-drag an outlet from the navigation controller scene to the
 new view scene. When you drop the outlet, select "root view controller" from the 
 Relationship Segue menu. 
 
-![view_nav_outlet](https://dl.dropboxusercontent.com/u/80807880/tuts_images/view_nav_outlet.png)
+![view_nav_outlet](/tuts_images/view_nav_outlet.png)
 
-![view_nav_connection](https://dl.dropboxusercontent.com/u/80807880/tuts_images/view_to_nav.png)
+![view_nav_connection](/tuts_images/view_to_nav.png)
 
 {x: adding_label} 
 Let's add a label to this new view by dragging a label object from the
@@ -162,7 +162,7 @@ and delete the First Scene and Second Scene scenes from the storyboard. You
 should now only have three total scenes: a tab bar controller, a navigation controller,
 and a view controller. 
 
-![one_view_left](https://dl.dropboxusercontent.com/u/80807880/tuts_images/first_view_screenshot.png)
+![one_view_left](/tuts_images/first_view_screenshot.png)
 
 ### Adding the other views to our default project 
 
@@ -187,7 +187,7 @@ views: Journal, Calendar, Trends, and Settings.
 Your tab bar now should have five items and you should have a total of five 
 navigation controller/view controller pairs. 
 
-![all_tabs](https://dl.dropboxusercontent.com/u/80807880/tuts_images/all_tabs.png)
+![all_tabs](/tuts_images/all_tabs.png)
 
 ### Adding images to tab bar items 
 
@@ -208,7 +208,7 @@ file and you'll have an icons folder.
 Drag the icons folder into your xcode 
 project's images.xcassets. You'll now see your icons in the images.xcassets folder. 
 
-![tab_icons_added](https://dl.dropboxusercontent.com/u/80807880/tuts_images/adding_tab_assets.png)
+![tab_icons_added](/tuts_images/adding_tab_assets.png)
 
 If you are adding your own icons, please follow the [Icon and Image Sizes 
 guidelines](https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/MobileHIG/IconMatrix.html) 
@@ -256,7 +256,7 @@ Before moving on, familiarize yourself with the ["Auto Layout menus in Xcode"](h
 Now let's go through a concrete example of auto layout by creating our new entry
 form UI. Here's a wire frame for this view:
 
-![x: entry_wireframe](https://dl.dropboxusercontent.com/u/80807880/tuts_images/flourish_entry_wireframe.png)
+![x: entry_wireframe](/tuts_images/flourish_entry_wireframe.png)
 
 As you can see we have a text field for entering a title for your entry, a
 select button to select a mood from a set of options, a text field for the body
@@ -277,7 +277,7 @@ add a 40 point height constraint in the Pin menu.
 {x: set_date_text}
 Change the text property of our text field to "Date" in the attributes inspector.
 
-![date_height_constraint](https://dl.dropboxusercontent.com/u/80807880/tuts_images/date_field_height_constraint.png)
+![date_height_constraint](/tuts_images/date_field_height_constraint.png)
 
 Make sure to select "items of new constraints" from the update frames dropdown in
 the Pin menu. This option sets these constraints only the selected objects in our view, 
@@ -298,7 +298,7 @@ Ctrl-drag from the date field to the containing view and select leading space to
 margin. In the date field's size inspector, edit the leading space to superview
 constraint to equal 40. 
 
-![Ctrl_drag](https://dl.dropboxusercontent.com/u/80807880/tuts_images/text_field_ctrl_drag.png)
+![Ctrl_drag](/tuts_images/text_field_ctrl_drag.png)
 
 
 {x: text_field_container_constant}
@@ -316,7 +316,7 @@ to equal 15 points.
 
 Here's what your date field's constraints should look like in the size inspector:
 
-![date_constraints](https://dl.dropboxusercontent.com/u/80807880/tuts_images/date_field_constraints.png)
+![date_constraints](/tuts_images/date_field_constraints.png)
 
 Build and run at this point using various hardware emulators to verify our 
 constraints are working properly. 
@@ -352,7 +352,7 @@ Add a 10 point leading space to container using the same ctrl-drag technique we'
 
 Here's what our view should look like now. 
 
-![ui_field_icon](https://dl.dropboxusercontent.com/u/80807880/tuts_images/ui_icon_field.png)
+![ui_field_icon](/tuts_images/ui_icon_field.png)
 
 Now we need to add a divider that is going to separate our date field from the 
 other input objects in that app. 
@@ -383,7 +383,7 @@ In the divider's size inspector, change the top space to: Date constant to
 
 Here's what the divider's size inspector should now look like:
 
-![divider_constraints](https://dl.dropboxusercontent.com/u/80807880/tuts_images/divider_constraints.png)
+![divider_constraints](/tuts_images/divider_constraints.png)
 
 {x: date_field_background}
 In the attributes inspector, we now want to change our date field's border style to 
@@ -391,7 +391,7 @@ transparent and our font color to white in the date field's attribute inspector.
 
 Here's what our UI looks like at this point: 
 
-![ui_text_divider_icon](https://dl.dropboxusercontent.com/u/80807880/tuts_images/ui_icon_field_divider.png)
+![ui_text_divider_icon](/tuts_images/ui_icon_field_divider.png)
 
 ### Finishing the Entry Form UI 
 
@@ -414,7 +414,7 @@ Build out the rest of the New Entry scene interface using our Auto Layout
 techniques. It's ok to not have the exact same values as found in the source 
 code. Just watch out for constraint conflicts! 
 
-![ui_guide](https://dl.dropboxusercontent.com/u/80807880/tuts_images/ui_guide.png)
+![ui_guide](/tuts_images/ui_guide.png)
 
 ### Tackling other views
 
