@@ -1,6 +1,8 @@
-## What is Flourish?
+# What is Flourish?
 
-### Flourish is full, design to deployment app tutorial
+{ intro_video: <name>}
+
+## Flourish is full, design to deployment app tutorial
 
 Flourish is a mood journal app. More importantly, learning to build Flourish is
 the best way to get started learning app development because we think the best
@@ -10,7 +12,7 @@ that it can be difficult to learn to build apps by reading about specific classe
 or frameworks and would rather get on building a whole app and seeking out deep
 dives if you're still curious. 
 
-### You'll learn
+## You'll learn
 
 * Location Services
 * Auto Layout
@@ -19,20 +21,20 @@ dives if you're still curious.
 * Animation
 * Unit Testing 
 
-### Constantly Updating
+## Constantly Updating
 
 We want this to be comprehensive and thorough, while being incredibly easy for
 beginners to go through. If you think something can be made better or is unclear,
 please comment and we will be happy to revise this tutorial over time. 
 
-### Version Compatibility
+## Version Compatibility
 
 Swift is constantly evolving. Make sure your Xcode is compatible with the version
 of Swift we'll be using. 
 <strong>As of March 3, 2014, this tutorial is going to use Swift 1.2 conventions and syntax </strong>
 
 
-### Creating our Xcode Project
+## Creating our Xcode Project
 
 Let's do some setup. 
 

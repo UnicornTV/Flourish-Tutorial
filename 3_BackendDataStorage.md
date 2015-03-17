@@ -1,4 +1,4 @@
-## Saving our Data using CloudKit 
+# Saving our Data using CloudKit 
 
 New Concepts This Chapter 
 * Cloud Kit
@@ -8,7 +8,7 @@ New Concepts This Chapter
 * Data Encryption
 * Grand Central Dispatch
 
-### Introduction
+## Introduction
 We've heretofore focused on the view and controllers aspect of the MVC framework. 
 We've shown how to layout an interface in storyboards and how to add functionality 
 in a view controller file. You can currently create a journal entry, but you can't
@@ -17,7 +17,7 @@ are going to set up a data model that represents our journal entries and use the
 Cloud Kit framework to store our data in a cloud database and retrieve it whenever
 we need to. 
 
-### What is Cloud Kit? 
+## What is Cloud Kit? 
 
 Cloud Kit is a framework that makes it easy for us to move data between our app
 and iCloud containers. iCloud, of course, is Apple's cloud storage solution that
@@ -26,9 +26,9 @@ has a database component, but as you'll realize quickly, Cloud Kit has done a lo
 of the hard work for you when it comes to data mapping and has even provided a 
 simple GUI for creating our data models. 
 
-### Why Cloud Kit?
+## Why Cloud Kit?
 
-### Enabling Cloud Kit in Our App
+## Enabling Cloud Kit in Our App
 
 {video: flourish_cloudkit_capability}
 
@@ -61,7 +61,7 @@ Usually hitting the "fix error" button fixes it. Example below:
 
 ![icloud_error_example](/tuts_images/icloud_error.png)
 
-### Defining our Schema
+## Defining our Schema
 
 {x: log_in_cloud_kit}
 To begin creating a data model, log into your [cloud kit developer dashboard](https://icloud.developer.apple.com/dashboard/)
@@ -103,7 +103,7 @@ and select the attribute type and index checkboxes for each to match the image b
 
 ![entry_record_table](/tuts_images/entry_record_table.png)
 
-### Model, User, and Entry models
+## Model, User, and Entry models
 
 Now that we've defined our schema, let's hop back into our xcode project and write
 some code.
@@ -367,7 +367,7 @@ key "Title." Our setters and getters for body, mood, and location follow the sam
 logic. 
 
 
-### Encrypting Our Data
+## Encrypting Our Data
 
 {video: flourish_encryption_intro}
 
@@ -583,7 +583,7 @@ the encryption can fail so we might get a nil value from our getter method. We
 are only encrypting the title and body properties of the entry in this app, but
 feel free to encrypt as much or as little as you want.  
 
-### CRUD Operations
+## CRUD Operations
 
 {video: flourish_CRUD_create}
 

@@ -1,6 +1,6 @@
-## Putting it all together
+# Putting it all together
 
-### Introduction
+## Introduction
 In this chapter we are going to create controller methods that will save an entry
 to our database using the custom class methods we created in the previous chapter.
 There are no new concepts in this chapter, we are just tying things together in
@@ -8,7 +8,7 @@ familiar ways.
 
 {video: flourish_first_save}
 
-### New IBOutlets
+## New IBOutlets
 
 Let's go back to EntryFormController.swift. Now that we have set up our model
 and created methods in our Entry class to do basic CRUD operations to our model, 

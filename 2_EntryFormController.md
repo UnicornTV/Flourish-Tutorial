@@ -1,6 +1,6 @@
-## Entry Form Controller
+# Entry Form Controller
 
-### Introduction
+## Introduction
 
 Entering a new mood log is the main user action in Flourish. Therefore, it is no
 surprise this view is the most interactive. In this section we will take our static 
@@ -14,7 +14,7 @@ New Concepts This Chapter
 * IBOutlet 
 * Downcasting
 
-### Creating EntryFormController.swift
+## Creating EntryFormController.swift
 
 {video: create_link_entry_form}
 
@@ -77,7 +77,7 @@ Add the following to your EntryFormController.swift file.
 ~~~
 
 
-### Mood Dropdown 
+## Mood Dropdown 
 
 {video: flourish_picker_feelings_constants}
 
@@ -468,7 +468,7 @@ colon. Using our togglePicker function as an example, we read the ternary statem
 as "if picker.hidden is true, call the openPicker method. If false, call the 
 closePicker method." 
 
-### IBActions 
+## IBActions 
 
 You may have noticed that our togglePicker() method has an @IBAction deceleration
 before our familiar func declaration. The @IBAction declaration is known as a 
@@ -566,7 +566,7 @@ Ok now build and run, you'll notice that when you pick a mood from the picker
 dropdown, our feelingButton's label changes from "select" to the title of the 
 mood you've selected!
 
-### Getting location data 
+## Getting location data 
 
 We want to be able to allow the user to enter location data for their entry. This
 can help our user determine if certain places are more helpful or hurtful to mental
