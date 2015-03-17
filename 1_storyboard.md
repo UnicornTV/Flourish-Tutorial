@@ -41,7 +41,7 @@ code pertaining to that storyboard. However, looking at our project navigator,
 you see we have FirstViewController.swift and a SecondViewController.swift file 
 and no file to correspond to the Tab Bar controller in our storyboard. We will
 eventually add a file for this controller, but there is still a controller in our
-project. Elements that are dragged onto a storybard have default functionality
+project. Elements that are dragged onto a storyboard have default functionality
 and if we are not extending that functionality, we often don't need to create a
 .swift file for that controller. 
 
