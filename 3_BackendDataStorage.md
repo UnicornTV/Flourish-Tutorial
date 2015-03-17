@@ -44,7 +44,7 @@ assets for you as you need them.
 When you toggle on iCloud capabilities, you're prompted to select a developer
 account to associate with this app. 
 
-![choose_icloud_account](https://dl.dropboxusercontent.com/u/80807880/tuts_images/choose_account_icloud.png)
+![choose_icloud_account](/tuts_images/choose_account_icloud.png)
 
 {x: services_checkboxes}
 In the iCloud menu of the capabilities pane, check the CloudKit box in the services
@@ -59,7 +59,7 @@ see you are all set up by looking at the steps below the containers section.
 There a few different errors that can occur when enabling iCloud capabilities. 
 Usually hitting the "fix error" button fixes it. Example below:
 
-![icloud_error_example](https://dl.dropboxusercontent.com/u/80807880/tuts_images/icloud_error.png)
+![icloud_error_example](/tuts_images/icloud_error.png)
 
 ### Defining our Schema
 
@@ -101,7 +101,7 @@ index checkboxes all checked.
 Add Title, Location, and LocalStorageID attributes to your Entry record type 
 and select the attribute type and index checkboxes for each to match the image below:
 
-![entry_record_table](https://dl.dropboxusercontent.com/u/80807880/tuts_images/entry_record_table.png)
+![entry_record_table](/tuts_images/entry_record_table.png)
 
 ### Model, User, and Entry models
 
@@ -797,7 +797,7 @@ we must enable the sort and query options in our CloudKit dashboard.
 In your Cloud Kit dashboard, check the sort and query checkboxes for the 
 Date Created attribute of your Entry record type. 
 
-![query_sort_enable](https://dl.dropboxusercontent.com/u/80807880/tuts_images/enable_query_sort.png)
+![query_sort_enable](/tuts_images/enable_query_sort.png)
 
 Now that that's set, on to the update method!
 

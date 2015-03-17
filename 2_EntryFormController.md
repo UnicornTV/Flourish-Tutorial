@@ -54,7 +54,7 @@ on the entry form controller object in your entry view controller scene. Now go
 to that view controller's identity inspector and in the Custom Class section's class field,
 type EntryFormController.
 
-![link_custom_entry_class](https://dl.dropboxusercontent.com/u/80807880/tuts_images/link_entry_controller.png)
+![link_custom_entry_class](/tuts_images/link_entry_controller.png)
 
 That's it! We've now got our EntryFormController.swift file and our view controller
 in interface builder linked up. Now we need to declare some basic methods in our
@@ -84,7 +84,7 @@ Add the following to your EntryFormController.swift file.
 Let's start with what we need for our mood picker. Our end goal is to get our 
 picker to look like this
 
-![picker_image](https://dl.dropboxusercontent.com/u/80807880/tuts_images/picker_example.png) 
+![picker_image](/tuts_images/picker_example.png) 
 
 Our dropdown will be built by 
 placing the six mood option buttons in front of an image background. As always 
@@ -206,7 +206,7 @@ Now that we have created a new subview, let's make sure nothing has gone awry.
 Go back and change the picker's hidden property to true and alpha to 1 and build
 and run to make sure our subview is showing up. You should see this:
 
-![dropdown_no_button_example](https://dl.dropboxusercontent.com/u/80807880/tuts_images/dropdown_no_button.png)
+![dropdown_no_button_example](/tuts_images/dropdown_no_button.png)
 
 You might need to reposition some of your labels to get the tail of the picker
 image to line up with your select button. 
@@ -670,7 +670,7 @@ Add a NSLocationWhenInUseUsageDescription key in
 Info.plist with a our message as a string. We need to do this to set a message to get 
 displayed to the user when we ask for permission to use location services.
 
-![adding_plist_location_permission](https://dl.dropboxusercontent.com/u/80807880/tuts_images/location_permission_plist.png)
+![adding_plist_location_permission](/tuts_images/location_permission_plist.png)
 
 {video: flourish_location_delegate}
 

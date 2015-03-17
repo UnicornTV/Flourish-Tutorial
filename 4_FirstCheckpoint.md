@@ -29,7 +29,7 @@ Connect the UITextView in the entry form storyboard to the bodyInput IBOutlet
 variable and connect the UITextField in the entry form storyboard to the 
 titleInput IBOutlet variable. 
 
-![input_outlet_connections](https://dl.dropboxusercontent.com/u/80807880/tuts_images/enable_query_sort.png)
+![input_outlet_connections](/tuts_images/enable_query_sort.png)
 
 Now we can use the create method of our Entry class to save our entry.
 
