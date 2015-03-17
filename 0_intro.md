@@ -1,6 +1,6 @@
 # What is Flourish?
 
-{ intro_video: <name>}
+{intro-video: flourish-intro}
 
 ## Flourish is full, design to deployment app tutorial
 

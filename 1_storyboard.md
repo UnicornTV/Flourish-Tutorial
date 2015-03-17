@@ -1,6 +1,6 @@
-## Designing our Interface
+# Designing our Interface
 
-### Introduction
+## Introduction
 
 In order to kick off our project, we need to design our user interface (UI). By the 
 end of this section we'll have all of the views we need for Flourish set up and 
@@ -66,7 +66,7 @@ Now that you're comfortable
 with what xcode gives us as a default, let's go back to xcode and start adding 
 views. 
 
-### Nesting View Controllers
+## Nesting View Controllers
 
 {video: nesting}
 
@@ -164,7 +164,7 @@ and a view controller.
 
 ![one_view_left](/tuts_images/first_view_screenshot.png)
 
-### Adding the other views to our default project 
+## Adding the other views to our default project 
 
 {video: adding_tabs}
 
@@ -189,7 +189,7 @@ navigation controller/view controller pairs.
 
 ![all_tabs](/tuts_images/all_tabs.png)
 
-### Adding images to tab bar items 
+## Adding images to tab bar items 
 
 {video: adding_tab_icon_names}
 
@@ -237,7 +237,7 @@ The images for each tab bar item are as follows:
 * Settings Scene - settings icon 
 
 
-### Adding UI Elements with Auto Layout 
+## Adding UI Elements with Auto Layout 
 
 If you build and run our project so far, you'll notice label we added
 to our entry view tabs appear in a different place than where we dropped it into the
@@ -393,7 +393,7 @@ Here's what our UI looks like at this point:
 
 ![ui_text_divider_icon](/tuts_images/ui_icon_field_divider.png)
 
-### Finishing the Entry Form UI 
+## Finishing the Entry Form UI 
 
 {video: flourish_auto_label_select}
 
@@ -416,7 +416,7 @@ code. Just watch out for constraint conflicts!
 
 ![ui_guide](/tuts_images/ui_guide.png)
 
-### Tackling other views
+## Tackling other views
 
 Now that you understand how to use Auto Layout to position elements in your view,
 you can build out the rest of the static UI. Some of the remaining views will 
